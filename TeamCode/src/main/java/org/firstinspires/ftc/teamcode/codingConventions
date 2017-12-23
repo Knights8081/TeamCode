@@ -19,7 +19,7 @@ Comments:
  *
  * @param someParameter - this is generated for functions (including Constructors) that have parameters
  *
- * @return someObject - this is generate for a function that returns something (int, double, etc.)
+ * @return someObject - this is generated for a function that returns something (int, double, etc.)
  *
  * @throws SomeException - this is generated for a function that throws an exception
  *

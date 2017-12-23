@@ -9,28 +9,30 @@ Comments:
  */
 
 /**
-  * Javadoc comment - These comments are the documentation that you read in an API. Generally, you
-  *  you want to have a javadoc before every class and before every function in the class. The
-  *  only exceptions might be any getters and setters, since we all know what those do.
-  *
-  * This type of documentation will usually have some tags on it like the following:
-  *
-  * @author Corbin Young
-  *
-  * @param someParameter - this is generated for functions (including Constructors) that have parameters
-  *
-  * @return someObject - this is generate for a function that returns something (int, double, etc.)
-  *
-  * @throws SomeException - this is generated for a function that throws an exception
-  *
-  * Make sure you don't just give the name of an item for a tag, like someParameter. Make sure
-  *  that you give a comment about it as well. The only one that doesn't require this is @author
-  *
-  * Also, the comments for a javadoc should could before any and all tags. Tags are the last thing
-  *  in a javadoc. I don't think that there's a specific order that the tags generally come in, but
-  *  what I've commonly seen is param, throws, return. The author tag should only be put in the top
-  *  javadoc comment for the class.
-  */
+ * Javadoc comment - These comments are the documentation that you read in an API. Generally, you
+ *  you want to have a javadoc before every class and before every function in the class. The
+ *  only exceptions might be any getters and setters, since we all know what those do.
+ *
+ * This type of documentation will usually have some tags on it like the following:
+ *
+ * @author Corbin Young
+ *
+ * @param someParameter - this is generated for functions (including Constructors) that have parameters
+ *
+ * @return someObject - this is generate for a function that returns something (int, double, etc.)
+ *
+ * @throws SomeException - this is generated for a function that throws an exception
+ *
+ * Make sure you don't just give the name of an item for a tag, like someParameter. Make sure
+ *  that you give a comment about it as well. The only one that doesn't require this is @author
+ *
+ * Also, the comments for a javadoc should could before any and all tags. Tags are the last thing
+ *  in a javadoc.
+ *
+ * When you create a javadoc, Java will generate the tags for you. They are generated in the
+ *  following order: param, return, throws. The author tag should only be put in the javadoc
+ *  comment for the class (this one will not be generated).
+ */
 
 
 /* --------------------------------------------------------------------------------------------- */

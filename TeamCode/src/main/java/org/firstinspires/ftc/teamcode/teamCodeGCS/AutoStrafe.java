@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  *
  * @author Luke Frazer
  */
-public class AutoStrafe {
+public final class AutoStrafe {
 
     //TODO - Test for value to use for setting power
     private static final float powerValue = 0.0f;

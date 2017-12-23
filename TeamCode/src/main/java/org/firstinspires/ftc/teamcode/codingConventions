@@ -44,9 +44,9 @@ The convention for naming any variable or method (except for the constructor) is
  WILL YELL AT YOU.
 
 Do:
-thisIsADecentVariableName - this is generally what you should use
+thisIsADecentVariableName - this is generally what you should use (though it doesn't need to be this long)
 THISISACONSTANT - this is only used for values that are declared final (constant)
-_thisIsAVariableName - I've only seend this used in languages like C or C++ (not recommended)
+_thisIsAVariableName - I've only seen this used in languages like C or C++ (not recommended)
 
 Don't:
 this is not a variable name - you're compiler will yell at you for this
@@ -78,7 +78,7 @@ r
 c
 
 One-letter names are only really okay if you're just running through a loop or something,
- but you should still try to avoid it if you can. Don't ever use things for a class variable
+ but you should still try to avoid it if you can. Don't ever use these for a class variable
  or parameter. You will spend far more time debugging than you should have to if the name doesn't
  give you some sort of clue as to what it's being used for.
 
@@ -88,9 +88,9 @@ One-letter names are only really okay if you're just running through a loop or s
 
 Declarations:
 
-In Java, every class, class variable (a.k.a. instance variable), and method (function) has a declaration.
+In Java, every class, class variable, and method (function) has a declaration.
  This declaration generally has a group of modifiers before the actual name. First, I'm going to give
- you the general format for declaring a class, variable, or method. Then I'll go over what the
+ you the general format for declaring a class, variable, or method. Later, I'll go over what the
  individual pieces of the declaration mean.
 
 
@@ -138,7 +138,7 @@ I will explain more about the modifiers in a bit, but real quick I want to make 
     and requires a subclass, while final (in this case) means that you cannot make a subclass from
     this class. As you might guess, those don't work well together.
 
-   2.1) This also means that you would never declare a class to be both static and abstract.
+   2.1) Static and abstract are only ever used together for an internal class, never for a variable or method.
 
    2.2) Static and final are only ever used together for a variable or internal class, never for a method.
 
@@ -188,15 +188,15 @@ All class variables should generally be made private. If a variable is public, t
  make something a global constant, you would make it both public and final.
 
 
- /* -------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------- */
 
 
- Modifiers:
+Modifiers:
 
- Modifiers are how we classify things. I will walk through the groups that I mentioned above in the
-  declarations section. Just to note, there are more than what I've mentioned, but are dependent on
-  the type of program you're writing. Since they're not commonly used, I went ahead and just left them
-  out of this.
+Modifiers are how we classify things. I will walk through the groups that I mentioned above in the
+ declarations section. Just to note, there are more than what I've mentioned, but are dependent on
+ the type of program you're writing. Since they're not commonly used, I went ahead and just left them
+ out of this.
 
 
 <Access Modifiers>
@@ -234,7 +234,7 @@ public class ExampleClass {
     private int instanceValue;
 
     public ExampleClass(int someValue) {
-        setInstanceValue(someValue);
+        instanceValue = someValue
     }
 
     public static int getStaticValue() {
@@ -243,10 +243,6 @@ public class ExampleClass {
 
     public int getInstanceValue() {
         return instanceValue;
-    }
-
-    private void setInstanceValue(int someValue) {
-        instanceValue = someValue;
     }
 }
 
@@ -331,10 +327,10 @@ The return type for a method is the type of object that it will return. Another 
 /* --------------------------------------------------------------------------------------------- */
 
 
-Braces:
+Curly brackets:
 
 There are a couple conventions when it comes to the usage of braces. Generally there are two common
- ways that people use braces, shown below:
+ ways that people use curly brackets, shown below:
 
 
  public void blankMethod() {
@@ -347,17 +343,17 @@ There are a couple conventions when it comes to the usage of braces. Generally t
  }
 
 Either way is acceptable. It just comes down to personal preference. However, make sure that you are
- consistent. Don't change how you use the braces, and make sure that if you're working in a group,
+ consistent. Don't change how you use them, and make sure that if you're working in a group,
  that everyone is doing it the same way. It will make the code easier to follow.
 
 Also, MAKE SURE YOU INDENT! The actual amount of indentation is up for debate, but what isn't is that
  you need to do it. It makes code way harder to read and debug if there isn't proper indentation.
 
-Also, final note on this: There are times when you can avoid using braces. If you write something like
- a while-loop, or a for-loop, or an if-statement, and the body only has one line, then you don't need
- to use the braces. However, if the body is more than one line, braces are required.
+Also, final note on this: There are times when you can avoid using curly brackets. If you write
+ something like a while-loop, or a for-loop, or an if-statement, and the body only has one line,
+ then you don't need to use them. However, if the body is more than one line, they are required.
 
-Here's an example of not needing braces:
+Here's an example of not needing curly brackets:
 
 if(true)
     System.out.println("TRUE");
@@ -375,6 +371,25 @@ else
     System.out.println("You'll never get here");
 
 
+The exception to this is any method or constructor. Even if their body is only one line, methods
+ and constructors must always have braces
+
 /* --------------------------------------------------------------------------------------------- */
+
+Bracket types:
+
+These are the types of brackets and how to refer to them.
+
+Curly brackets - {}
+
+Angle brackets - <>
+
+Parenthesis - ()
+
+Square brackets - []
+
+
+/* --------------------------------------------------------------------------------------------- */
+
 
 I hope this guide was helpful :)

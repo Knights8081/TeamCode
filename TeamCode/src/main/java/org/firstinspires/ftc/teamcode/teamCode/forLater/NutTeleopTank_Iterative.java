@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -48,9 +48,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
 @TeleOp(name="Nut: Teleop Tank", group="Nut")
-
 public class NutTeleopTank_Iterative extends OpMode{
 
     /* Declare OpMode members. */
@@ -59,7 +57,7 @@ public class NutTeleopTank_Iterative extends OpMode{
     double          clawOffset  = 0.0 ;                  // Servo mid position
     final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
 
-    /*
+    /**
      * Code to run ONCE when the driver hits INIT
      */
     @Override
@@ -70,35 +68,32 @@ public class NutTeleopTank_Iterative extends OpMode{
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("Say", "Hello Driver");
     }
 
-    /*
+    /**
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
     @Override
     public void init_loop() {
     }
 
-    /*
+    /**
      * Code to run ONCE when the driver hits PLAY
      */
     @Override
     public void start() {
     }
 
-    /*
+    /**
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
     @Override
     public void loop() {
-        double left;
-        double right;
-
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        left = gamepad1.left_stick_y;
-        right = gamepad1.right_stick_y;
+        double left = gamepad1.left_stick_y;
+        double right = gamepad1.right_stick_y;
 
         robot.leftDrive.setPower(left);
         robot.rightDrive.setPower(right);
@@ -109,32 +104,31 @@ public class NutTeleopTank_Iterative extends OpMode{
         if (gamepad1.right_bumper)
             clawOffset += CLAW_SPEED;
         else if (gamepad1.left_bumper)
-            clawOffset -= CLAW_SPEED;}
+            clawOffset -= CLAW_SPEED;
+    }
 
-
-
-        //use left stick for strafing left and right
-
-
-    //{
-     //   double r;
-     //   r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-        //double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-        // double rightX = gamepad1.right_stick_x;
-        // final double v1 = r * Math.cos(robotAngle) + rightX;
-        // final double v2 = r * Math.sin(robotAngle) - rightX;
-        //final double v3 = r * Math.sin(robotAngle) + rightX;
-        //final double v4 = r * Math.cos(robotAngle) - rightX;
-
-        // robot.leftDrive.setPower(v1);
-        // robot.rightDrive.setPower(v2);
-        // robot.leftArm.setPower(v3);
-        // robot.rightArm.setPower(v4);
-   // }
-    /*
+    /**
      * Code to run ONCE after the driver hits STOP
      */
     @Override
     public void stop() {
     }
+
+//    public void strafingStuff() {
+
+        //use left stick for strafing left and right
+
+//        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+//        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+//        double rightX = gamepad1.right_stick_x;
+//        double v1 = r * Math.cos(robotAngle) + rightX;
+//        double v2 = r * Math.sin(robotAngle) - rightX;
+//        double v3 = r * Math.sin(robotAngle) + rightX;
+//        double v4 = r * Math.cos(robotAngle) - rightX;
+//
+//        robot.leftDrive.setPower(v1);
+//        robot.rightDrive.setPower(v2);
+//        robot.leftArm.setPower(v3);
+//        robot.rightArm.setPower(v4);
+//    }
 }

@@ -27,7 +27,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * code before using it in a situation that could harm someone, and (3) make sure you understand
  * what a piece of code (including this one) does before running it.
  */
-
 @TeleOp(name = "Calibrate MR Color", group = "Utilities")
 @Disabled
 public class CalibrateColorSensor extends OpMode {
@@ -63,21 +62,16 @@ public class CalibrateColorSensor extends OpMode {
          */
         command = color.readUnsignedByte(Register.COMMAND);
 
-        if (!(command == 0 || command == 1)) {
-            // Something is in progress. Do nothing.
-        }
-        else if (gamepad1.x || gamepad2.x) {
+        if (!(command == 0 || command == 1))
+            ; // Something is in progress. Do nothing.
+        else if (gamepad1.x || gamepad2.x)
             color.writeCommand(Command.CALIBRATE_BLACK);
-        }
-        else if (gamepad1.y || gamepad2.y) {
+        else if (gamepad1.y || gamepad2.y)
             color.writeCommand(Command.CALIBRATE_WHITE);
-        }
-        else if (gamepad1.a || gamepad2.a) {
+        else if (gamepad1.a || gamepad2.a)
             color.enableLed(true);
-        }
-        else if (gamepad1.b || gamepad2.b) {
+        else if (gamepad1.b || gamepad2.b)
             color.enableLed(false);
-        }
 
         /* The following simply deals with the telemetry printed to the Driver's Station phone.
          * Status information is printed along with some instructions.

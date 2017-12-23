@@ -3,7 +3,8 @@ package org.firstinspires.ftc.teamcode.teamCodeGCS;
 import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 
 /**
- * This class contains two small macro functions to handle strafing based on the trigger
+ * This class contains two small macro functions to handle strafing based on input from the
+ *  controller.
  *
  * @author Luke Frazer
  */

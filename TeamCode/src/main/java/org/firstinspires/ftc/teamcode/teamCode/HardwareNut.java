@@ -75,14 +75,14 @@ public class HardwareNut
     public static final double ARM_DOWN_POWER  = -0.45 ;
     public static final double IDOLHAND_MIN_RANGE  = 0.05 ;
     public static final double IDOLHAND_MAX_RANGE = 1.3 ;
-    public final static double CLAW_MIN_RANGE  = 0.05;
-    public final static double CLAW_MAX_RANGE  = 1.3;
-    public final static double ARM_MIN_RANGE  = 0.05;
-    public final static double ARM_MAX_RANGE  = 1.0;
+    public static final double CLAW_MIN_RANGE  = 0.05;
+    public static final double CLAW_MAX_RANGE  = 1.3;
+    public static final double ARM_MIN_RANGE  = 0.05;
+    public static final double ARM_MAX_RANGE  = 1.0;
 
-    public final static double ARM_HOME = 0.08;
-    public final static double CLAW_HOME = 0.08;
-    public final static double IDOLHAND_HOME = 0.08;
+    public static final double ARM_HOME = 0.08;
+    public static final double CLAW_HOME = 0.08;
+    public static final double IDOLHAND_HOME = 0.08;
 
 
 
@@ -93,7 +93,6 @@ public class HardwareNut
 
     /* Constructor */
     public HardwareNut(){
-
     }
 
     /* Initialize standard Hardware interfaces */
@@ -127,7 +126,7 @@ public class HardwareNut
 
 
 
-   //** //leftDrive = FrontLeft
+        //leftDrive = FrontLeft
         //rightDrive = FrontRight
         //leftArm = Backleft
         //rightArm = Backright
@@ -173,15 +172,6 @@ public class HardwareNut
         idolhand = hwMap.get(Servo.class, "idol_hand");
         claw.setPosition(MID_SERVO);
         arm.setPosition(MID_SERVO);
-
-
-
-
-
-
-
     }
-
-
 }
 

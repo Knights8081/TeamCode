@@ -331,8 +331,8 @@ The return type for a method is the type of object that it will return. Another 
 
 Curly brackets:
 
-There are a couple conventions when it comes to the usage of braces. Generally there are two common
- ways that people use curly brackets, shown below:
+There are a couple conventions when it comes to the usage of curly brackets. Generally there are two
+ common ways that people use them, shown below:
 
 
  public void blankMethod() {
@@ -341,7 +341,7 @@ There are a couple conventions when it comes to the usage of braces. Generally t
 
  public void otherBlankMethod()
  {
-    //This is how other people like to do it
+    //This is how some people like to do it
  }
 
 Either way is acceptable. It just comes down to personal preference. However, make sure that you are
@@ -366,8 +366,8 @@ else
 Here's an example of needing braces:
 
 if(true) {
-    int x = Math.pow(2, 5);
-    System.out.println(x);
+    int x = Math.pow(2, 5);              //x = 2^5
+    System.out.println("x = " + x);      //x = 32
 }
 else
     System.out.println("You'll never get here");
@@ -386,11 +386,12 @@ Curly brackets - {}
 
 Angle brackets - <>
 
-Parenthesis - ()
+Parentheses - ()
 
 Square brackets - []
 
 
 /* --------------------------------------------------------------------------------------------- */
+
 
 I hope this guide was helpful :)

@@ -20,10 +20,10 @@ public final class AutoStrafe {
     public static void left(final HardwareNut robot) {
 
         //Sequence: rD -, lD +, rA +, lA -
-        robot.rightDrive.setPower(powerValue);
-        robot.leftDrive.setPower(powerValue);
-        robot.rightArm.setPower(powerValue);
-        robot.leftArm.setPower(powerValue);
+        robot.getRightDrive().setPower(-powerValue);
+        robot.getLeftDrive().setPower(powerValue);
+        robot.getRightArm().setPower(powerValue);
+        robot.getLeftArm().setPower(-powerValue);
     }
 
     /**
@@ -34,9 +34,9 @@ public final class AutoStrafe {
     public static void right(final HardwareNut robot) {
 
         //Sequence: rD +, lD -, rA -, lA +
-        robot.rightDrive.setPower(powerValue);
-        robot.leftDrive.setPower(powerValue);
-        robot.rightArm.setPower(powerValue);
-        robot.leftArm.setPower(powerValue);
+        robot.getRightDrive().setPower(powerValue);
+        robot.getLeftDrive().setPower(-powerValue);
+        robot.getRightArm().setPower(-powerValue);
+        robot.getLeftArm().setPower(powerValue);
     }
 }

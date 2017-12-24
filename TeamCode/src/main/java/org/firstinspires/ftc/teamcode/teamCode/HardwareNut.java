@@ -50,25 +50,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwareNut
-{
+public class HardwareNut {
     /* Public OpMode members. */
-    public DcMotor  leftDrive   = null;
-    public DcMotor  rightDrive  = null;
-    public DcMotor  leftArm     = null;
-    public DcMotor  rightArm    = null;
-    public Servo    arm         = null;
-    public Servo    claw        = null;
-    public Servo    idolhand    = null;
-    public DcMotor  liftArm     = null;
-    public DcMotor  idolslide   = null;
-    public DcMotor  idollift    = null;
-    public DcMotor  glyph       = null;
+    private DcMotor  leftDrive   = null;
+    private DcMotor  rightDrive  = null;
+    private DcMotor  leftArm     = null;
+    private DcMotor  rightArm    = null;
+    private Servo    arm         = null;
+    private Servo    claw        = null;
+    private Servo    idolHand    = null;
+    private DcMotor  liftArm     = null;
+    private DcMotor  idolSlide   = null;
+    private DcMotor  idolLift    = null;
+    private DcMotor  glyph       = null;
 
-    public DcMotor FR = null;
-    public DcMotor FL = null;
-    public DcMotor BR = null;
-    public DcMotor BL = null;
+    private DcMotor FR = null;
+    private DcMotor FL = null;
+    private DcMotor BR = null;
+    private DcMotor BL = null;
 
     public static final double MID_SERVO       =  0.0 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -85,35 +84,86 @@ public class HardwareNut
     public static final double IDOLHAND_HOME = 0.08;
 
 
-
-
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+//    private HardwareMap hwMap           =  null;
+//    private ElapsedTime period  = new ElapsedTime();
 
-    /* Constructor */
+    /**
+     * Creates an instance of the Hardware Nut class
+     */
     public HardwareNut(){
     }
 
-    /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
+    public DcMotor getLeftDrive() {
+        return leftDrive;
+    }
+
+    public DcMotor getRightDrive() {
+        return rightDrive;
+    }
+
+    public DcMotor getLeftArm() {
+        return leftArm;
+    }
+
+    public DcMotor getRightArm() {
+        return rightArm;
+    }
+
+    public Servo getArm() {
+        return arm;
+    }
+
+    public Servo getClaw() {
+        return claw;
+    }
+
+    public Servo getIdolHand() {
+        return idolHand;
+    }
+
+    public DcMotor getLiftArm() {
+        return liftArm;
+    }
+
+    public DcMotor getIdolSlide() {
+        return idolSlide;
+    }
+
+    public DcMotor getIdolLift() {
+        return idolLift;
+    }
+
+    public DcMotor getGlyph() {
+        return glyph;
+    }
+
+    /**
+     * Initialize all standard hardware interfaces
+     *
+     * @param ahwMap - TODO figure out what this is
+     */
+    public void init(final HardwareMap ahwMap) {
         // Save reference to Hardware map
-        hwMap = ahwMap;
+        HardwareMap hwMap = ahwMap;
 
         // Define and Initialize Motors
         leftDrive  = hwMap.get(DcMotor.class, "left_drive");
         rightDrive = hwMap.get(DcMotor.class, "right_drive");
         leftArm    = hwMap.get(DcMotor.class, "left_arm");
         rightArm   = hwMap.get(DcMotor.class, "right_arm");
+
         liftArm = hwMap.get(DcMotor.class, "lift_arm");
-        idolslide = hwMap.get(DcMotor.class, "idol_slide");
+        idolSlide = hwMap.get(DcMotor.class, "idol_slide");
         glyph = hwMap.get(DcMotor.class, "glyph_hand");
-        idollift = hwMap.get(DcMotor.class, "idol_lift");
+        idolLift = hwMap.get(DcMotor.class, "idol_lift");
+
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftArm.setDirection(DcMotor.Direction.FORWARD);
         rightArm.setDirection(DcMotor.Direction.REVERSE);
-        idolslide.setDirection(DcMotor.Direction.FORWARD);
+
+        idolSlide.setDirection(DcMotor.Direction.FORWARD);
         glyph.setDirection(DcMotor.Direction.FORWARD);
 
 
@@ -143,8 +193,8 @@ public class HardwareNut
         FL.setPower(0);
         BR.setPower(0);
         BL.setPower(0);
-        idolslide.setPower(0);
-        idollift.setPower(0);
+        idolSlide.setPower(0);
+        idolLift.setPower(0);
         glyph.setPower(0);
 
 
@@ -159,8 +209,8 @@ public class HardwareNut
         BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        idolslide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        idollift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        idolSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        idolLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         glyph.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
@@ -169,7 +219,7 @@ public class HardwareNut
         // Define and initialize ALL installed servos.
         claw  = hwMap.get(Servo.class, "left_hand");
         arm = hwMap.get(Servo.class, "right_hand");
-        idolhand = hwMap.get(Servo.class, "idol_hand");
+        idolHand = hwMap.get(Servo.class, "idol_hand");
         claw.setPosition(MID_SERVO);
         arm.setPosition(MID_SERVO);
     }

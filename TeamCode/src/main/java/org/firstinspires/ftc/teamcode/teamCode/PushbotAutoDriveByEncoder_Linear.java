@@ -63,7 +63,6 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
 @Autonomous(name="Pushbot: Auto Drive By Encoder 2", group="Pushbot")
 @Disabled
 public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
@@ -80,6 +79,9 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
 
+    /**
+     * TODO - What is this method doing?
+     */
     @Override
     public void runOpMode() {
 

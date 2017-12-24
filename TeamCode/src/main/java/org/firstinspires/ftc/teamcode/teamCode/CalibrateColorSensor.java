@@ -56,14 +56,14 @@ public class CalibrateColorSensor extends OpMode {
     @Override
     public void loop() {
 
-        /* Read the current value of the command register. If a calibration is not in progress, this
+        /*
+         * Read the current value of the command register. If a calibration is not in progress, this
          * register should read either 0x00 or 0x01 depending on the mode of the sensor. Otherwise,
          * the register will contain the command we recently wrote.
          */
         command = color.readUnsignedByte(Register.COMMAND);
 
-        if (!(command == 0 || command == 1))
-            ; // Something is in progress. Do nothing.
+        if (!(command == 0 || command == 1)) ; // Something is in progress. Do nothing.
         else if (gamepad1.x || gamepad2.x)
             color.writeCommand(Command.CALIBRATE_BLACK);
         else if (gamepad1.y || gamepad2.y)
@@ -73,7 +73,8 @@ public class CalibrateColorSensor extends OpMode {
         else if (gamepad1.b || gamepad2.b)
             color.enableLed(false);
 
-        /* The following simply deals with the telemetry printed to the Driver's Station phone.
+        /*
+         * The following simply deals with the telemetry printed to the Driver's Station phone.
          * Status information is printed along with some instructions.
          */
         switch (command) {

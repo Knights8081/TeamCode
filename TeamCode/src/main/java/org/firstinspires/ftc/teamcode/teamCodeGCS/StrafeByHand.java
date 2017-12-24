@@ -22,10 +22,10 @@ public final class StrafeByHand {
     public static void left(final HardwareNut robot, final double trigger) {
 
         //Sequence: rD -, lD +, rA +, lA -
-        robot.rightDrive.setPower(percentage * -trigger);
-        robot.leftDrive.setPower(percentage * trigger);
-        robot.rightArm.setPower(percentage * trigger);
-        robot.leftArm.setPower(percentage * -trigger);
+        robot.getRightDrive().setPower(percentage * -trigger);
+        robot.getLeftDrive().setPower(percentage * trigger);
+        robot.getRightArm().setPower(percentage * trigger);
+        robot.getLeftArm().setPower(percentage * -trigger);
     }
 
     /**
@@ -37,9 +37,9 @@ public final class StrafeByHand {
     public static void right(final HardwareNut robot, final double trigger) {
 
         //Sequence: rD +, lD -, rA -, lA +
-        robot.rightDrive.setPower(percentage * trigger);
-        robot.leftDrive.setPower(percentage * -trigger);
-        robot.rightArm.setPower(percentage * -trigger);
-        robot.leftArm.setPower(percentage * trigger);
+        robot.getRightDrive().setPower(percentage * trigger);
+        robot.getLeftDrive().setPower(percentage * -trigger);
+        robot.getRightArm().setPower(percentage * -trigger);
+        robot.getLeftArm().setPower(percentage * trigger);
     }
 }

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
+import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
 
 /**
  * Created by afield on 10/18/2017.
@@ -56,26 +57,24 @@ public class MechanumWheels2 extends OpMode {
 
     @Override
     public void loop() {
-        double left;
-        double right;
-        double RT;
-        double LT;
-
-
+//        double left;
+//        double right;
+//        double RT;
+//        double LT;
 
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        left = gamepad1.left_stick_y;
-        right = gamepad1.right_stick_y;
-        RT = gamepad1.right_trigger;
-        LT = gamepad1.left_trigger;
+        double left = gamepad1.left_stick_y;
+        double right = gamepad1.right_stick_y;
+        double RT = gamepad1.right_trigger;
+        double LT = gamepad1.left_trigger;
 
 
 
-        robot.leftDrive.setPower(left);
-        robot.rightDrive.setPower(right);
-        robot.leftArm.setPower(left);
-        robot.rightArm.setPower(right);
+        robot.getLeftDrive().setPower(left);
+        robot.getRightDrive().setPower(right);
+        robot.getLeftArm().setPower(left);
+        robot.getRightArm().setPower(right);
 
 
 
@@ -85,21 +84,19 @@ public class MechanumWheels2 extends OpMode {
         else if (gamepad1.left_bumper)
             clawOffset -= CLAW_SPEED;
 
-        if (gamepad2.dpad_up){
-            robot.liftArm.setPower(.75);}
-        else if (gamepad2.dpad_down){
-            robot.liftArm.setPower(-.75);}
-        robot.liftArm.setPower(0.0);
+        if (gamepad2.dpad_up)
+            robot.getLiftArm().setPower(.75);
+        else if (gamepad2.dpad_down)
+            robot.getLiftArm().setPower(-.75);
+
+        robot.getLiftArm().setPower(0.0);
 
 
 
-        if (gamepad1.right_trigger > 0.1) {
-            new StrafeR();
-        }
-
-        else if (gamepad1.left_trigger > 0.1) {
-            new StrafeL();
-        }
+        if (RT > 0.1)
+            StrafeByHand.right(robot, RT);
+        else if (LT > 0.1)
+            StrafeByHand.left(robot, LT);
 
 
     }

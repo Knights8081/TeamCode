@@ -1,8 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teamCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
+import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
 
 /**
  * Created by afield on 10/18/2017.
@@ -11,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class MechanumWheels extends OpMode {
     /* Declare OpMode members. */
-    HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware
+    private HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware
     // could also use HardwarePushbotMatrix class.
     double          armPosition     = robot.ARM_HOME;                   // Servo safe position
     double          clawPosition    = robot.CLAW_HOME;
@@ -61,36 +64,32 @@ public class MechanumWheels extends OpMode {
 
     @Override
     public void loop() {
-        double left;
-        double right;
-        double left2;
-        double right2;
-        double RT;
-        double LT;
-        double RT2;
-        double LT2;
-
-
-
-
+//        double left;
+//        double right;
+//        double left2;
+//        double right2;
+//        double RT;
+//        double LT;
+//        double RT2;
+//        double LT2;
 
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        left = gamepad1.left_stick_y;
-        right = gamepad1.right_stick_y;
-        left2 = gamepad2.left_stick_y;
-        right2 = gamepad2.right_stick_y;
-        RT = gamepad1.right_trigger;
-        LT = gamepad1.left_trigger;
-        RT2 = gamepad2.right_trigger;
-        LT2 = gamepad2.left_trigger;
+        double left = gamepad1.left_stick_y;
+        double right = gamepad1.right_stick_y;
+        double left2 = gamepad2.left_stick_y;
+        double right2 = gamepad2.right_stick_y;
+        double RT = gamepad1.right_trigger;
+        double LT = gamepad1.left_trigger;
+        double RT2 = gamepad2.right_trigger;
+        double LT2 = gamepad2.left_trigger;
 
 
 
-        robot.leftDrive.setPower(left);
-        robot.rightDrive.setPower(right);
-        robot.leftArm.setPower(left);
-        robot.rightArm.setPower(right);
+        robot.getLeftDrive().setPower(left);
+        robot.getRightDrive().setPower(right);
+        robot.getLeftArm().setPower(left);
+        robot.getRightArm().setPower(right);
 
 
 
@@ -103,18 +102,14 @@ public class MechanumWheels extends OpMode {
             //robot.rightClaw = clawOffset -= CLAW_SPEED;}
             //robot.rightClaw = -CLAW_SPEED;}
 
-        robot.glyph.setPower(right2);
+        robot.getGlyph().setPower(right2);
 
         while (gamepad2.dpad_right){
-            robot.idollift.setPower(.5);}
+            robot.getIdolLift().setPower(.5);}
         if (gamepad2.dpad_up){
-            robot.idollift.setPower(0);}
+            robot.getIdolLift().setPower(0);}
         while (gamepad2.dpad_left){
-            robot.idollift.setPower(-.5);}
-
-
-
-
+            robot.getIdolLift().setPower(-.5);}
 
 
 
@@ -129,38 +124,27 @@ public class MechanumWheels extends OpMode {
             handPosition -= Idol_SPEED;
 
         handPosition  = Range.clip(handPosition, robot.IDOLHAND_MIN_RANGE, robot.IDOLHAND_MAX_RANGE);
-        robot.idolhand.setPosition(handPosition);
+        robot.getIdolHand().setPosition(handPosition);
         armPosition  = Range.clip(armPosition, robot.ARM_MIN_RANGE, robot.ARM_MAX_RANGE);
-        robot.arm.setPosition(armPosition);
+        robot.getArm().setPosition(armPosition);
         clawPosition = Range.clip(clawPosition, robot.CLAW_MIN_RANGE, robot.CLAW_MAX_RANGE);
-        robot.claw.setPosition(clawPosition);
+        robot.getClaw().setPosition(clawPosition);
 
 
 
-        robot.liftArm.setPower(left2);
+        robot.getLiftArm().setPower(left2);
 
 
 
-        if (gamepad2.right_trigger > 0.1) {
-            robot.idolslide.setPower(.5*RT2);
-        }
-        else if (gamepad2.left_trigger > 0.1){
-            robot.idolslide.setPower(-.5*LT2);
-        }
+        if (RT2 > 0.1)
+            robot.getIdolSlide().setPower(.5*RT2);
+        else if (LT2 > 0.1)
+            robot.getIdolSlide().setPower(-.5*LT2);
 
-        if (gamepad1.right_trigger > 0.1) {
-            robot.rightDrive.setPower(.75*RT);
-            robot.leftDrive.setPower(.75*-RT);
-            robot.rightArm.setPower(.75*-RT);
-            robot.leftArm.setPower(.75*RT);
-
-        }
-
-        else if (gamepad1.left_trigger > 0.1){
-            robot.rightDrive.setPower(.75*-LT);
-            robot.leftDrive.setPower(.75*LT);
-            robot.rightArm.setPower(.75*LT);
-            robot.leftArm.setPower(.75*-LT);}
+        if (RT > 0.1)
+            StrafeByHand.right(robot, RT);
+        else if (LT > 0.1)
+            StrafeByHand.left(robot, LT);
 
 
     }

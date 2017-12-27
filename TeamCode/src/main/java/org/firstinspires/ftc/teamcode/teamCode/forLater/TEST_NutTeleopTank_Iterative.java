@@ -99,10 +99,10 @@ public class TEST_NutTeleopTank_Iterative extends OpMode {
         left = gamepad1.left_stick_y;
         right = gamepad1.right_stick_y;
 
-        robot.leftDrive.setPower(left);
-        robot.rightDrive.setPower(right);
-        robot.leftArm.setPower(left);
-        robot.rightArm.setPower(right);
+        robot.getLeftDrive().setPower(left);
+        robot.getRightDrive().setPower(right);
+        robot.getLeftArm().setPower(left);
+        robot.getRightArm().setPower(right);
 
         // Use gamepad left & right Bumpers to open and close the claw
         if (gamepad1.right_bumper)
@@ -122,10 +122,10 @@ public class TEST_NutTeleopTank_Iterative extends OpMode {
         final double v3 = r * Math.sin(robotAngle) + rightX;
         final double v4 = r * Math.cos(robotAngle) - rightX;
 
-        robot.leftDrive.setPower(v1);
-        robot.rightDrive.setPower(v2);
-        robot.leftArm.setPower(v3);
-        robot.rightArm.setPower(v4);
+        robot.getLeftDrive().setPower(v1);
+        robot.getRightDrive().setPower(v2);
+        robot.getLeftArm().setPower(v3);
+        robot.getRightArm().setPower(v4);
     }
 
 

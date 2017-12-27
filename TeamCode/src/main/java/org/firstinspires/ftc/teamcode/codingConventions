@@ -100,7 +100,7 @@ METHODS
 
 The general format for a method:
 
-<access modifier> <static or non-static> <final?> <return type> <method name>(<any parameters>)
+<access modifier> <static or non-static> <abstract?> <final?> <return type> <method name>(<any parameters>)
 
 Here are some examples of what a normal method would look like:
 

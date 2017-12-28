@@ -39,10 +39,10 @@ public final class Move {
      * @param robot - reference to the robot
      */
     private static void forward(final HardwareNut robot) {
-        robot.getRightDrive().setPower(POWERVALUE);
-        robot.getLeftDrive().setPower(POWERVALUE);
-        robot.getRightArm().setPower(POWERVALUE);
-        robot.getLeftArm().setPower(POWERVALUE);
+        robot.getRightDrive().setPower(-POWERVALUE);
+        robot.getLeftDrive().setPower(-POWERVALUE);
+        robot.getRightArm().setPower(-POWERVALUE);
+        robot.getLeftArm().setPower(-POWERVALUE);
     }
 
     /**
@@ -51,10 +51,10 @@ public final class Move {
      * @param robot - reference to the robot
      */
     private static void backward(final HardwareNut robot) {
-        robot.getRightDrive().setPower(-POWERVALUE);
-        robot.getLeftDrive().setPower(-POWERVALUE);
-        robot.getRightArm().setPower(-POWERVALUE);
-        robot.getLeftArm().setPower(-POWERVALUE);
+        robot.getRightDrive().setPower(POWERVALUE);
+        robot.getLeftDrive().setPower(POWERVALUE);
+        robot.getRightArm().setPower(POWERVALUE);
+        robot.getLeftArm().setPower(POWERVALUE);
     }
 
     /**
@@ -63,10 +63,10 @@ public final class Move {
      * @param robot - reference to the robot
      */
     private static void turnLeft(final HardwareNut robot) {
-        robot.getRightDrive().setPower(POWERVALUE);
-        robot.getLeftDrive().setPower(-POWERVALUE);
-        robot.getRightArm().setPower(POWERVALUE);
-        robot.getLeftArm().setPower(-POWERVALUE);
+        robot.getRightDrive().setPower(-POWERVALUE);
+        robot.getLeftDrive().setPower(POWERVALUE);
+        robot.getRightArm().setPower(-POWERVALUE);
+        robot.getLeftArm().setPower(POWERVALUE);
     }
 
     /**
@@ -75,10 +75,10 @@ public final class Move {
      * @param robot - reference to the robot
      */
     private static void turnRight(final HardwareNut robot) {
-        robot.getRightDrive().setPower(-POWERVALUE);
-        robot.getLeftDrive().setPower(POWERVALUE);
-        robot.getRightArm().setPower(-POWERVALUE);
-        robot.getLeftArm().setPower(POWERVALUE);
+        robot.getRightDrive().setPower(POWERVALUE);
+        robot.getLeftDrive().setPower(-POWERVALUE);
+        robot.getRightArm().setPower(POWERVALUE);
+        robot.getLeftArm().setPower(-POWERVALUE);
     }
 
     /**
@@ -132,34 +132,34 @@ public final class Move {
         stop(robot);
         SystemClock.sleep(longWait);
 
-//        backward(robot);
-//        SystemClock.sleep(shortWait);
-//
-//        stop(robot);
-//        SystemClock.sleep(longWait);
-//
-//        turnLeft(robot);
-//        SystemClock.sleep(shortWait);
-//
-//        stop(robot);
-//        SystemClock.sleep(longWait);
-//
-//        turnRight(robot);
-//        SystemClock.sleep(shortWait);
-//
-//        stop(robot);
-//        SystemClock.sleep(longWait);
-//
-//        strafeLeft(robot);
-//        SystemClock.sleep(shortWait);
-//
-//        stop(robot);
-//        SystemClock.sleep(longWait);
-//
-//        strafeRight(robot);
-//        SystemClock.sleep(shortWait);
-//
-//        stop(robot);
-//        SystemClock.sleep(longWait);
+        backward(robot);
+        SystemClock.sleep(shortWait);
+
+        stop(robot);
+        SystemClock.sleep(longWait);
+
+        turnLeft(robot);
+        SystemClock.sleep(shortWait);
+
+        stop(robot);
+        SystemClock.sleep(longWait);
+
+        turnRight(robot);
+        SystemClock.sleep(shortWait);
+
+        stop(robot);
+        SystemClock.sleep(longWait);
+
+        strafeLeft(robot);
+        SystemClock.sleep(shortWait);
+
+        stop(robot);
+        SystemClock.sleep(longWait);
+
+        strafeRight(robot);
+        SystemClock.sleep(shortWait);
+
+        stop(robot);
+        SystemClock.sleep(longWait);
     }
 }

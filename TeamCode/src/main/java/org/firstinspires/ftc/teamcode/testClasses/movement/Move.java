@@ -14,31 +14,26 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  *   5) Strafing Left
  *   6) Strafing right
  *
- * As I am not familiar with moving the robot, the functions are my best guess.
- * TODO - check the functions to make sure they are doing what I think they are
- *
  * @author Corbin Young
  */
-public final class Move {
+public final class Move implements Runnable {
 
-    /*
-     * TODO - test for valid value to use for setting the power
-     *
-     * This class could also be used to test the values until a good one is found to use in
-     *  the AutoStrafe class
-     */
     private static final float POWERVALUE = 0.75f;
     private static final float STRAFEVALUE = 0.6f;
 
     //Value to set the power to 0 to stop the motor
     private static final float STOPVALUE = 0.0f;
 
+    private HardwareNut robot;
+
+    public Move(final HardwareNut robot) {
+        this.robot = robot;
+    }
+
     /**
      * Move the robot forward
-     *
-     * @param robot - reference to the robot
      */
-    private static void forward(final HardwareNut robot) {
+    private void forward() {
         robot.getRightDrive().setPower(-POWERVALUE);
         robot.getLeftDrive().setPower(-POWERVALUE);
         robot.getRightArm().setPower(-POWERVALUE);
@@ -47,10 +42,8 @@ public final class Move {
 
     /**
      * Move the robot backward
-     *
-     * @param robot - reference to the robot
      */
-    private static void backward(final HardwareNut robot) {
+    private void backward() {
         robot.getRightDrive().setPower(POWERVALUE);
         robot.getLeftDrive().setPower(POWERVALUE);
         robot.getRightArm().setPower(POWERVALUE);
@@ -59,10 +52,8 @@ public final class Move {
 
     /**
      * Turn the robot to the left
-     *
-     * @param robot - reference to the robot
      */
-    private static void turnLeft(final HardwareNut robot) {
+    private void turnLeft() {
         robot.getRightDrive().setPower(-POWERVALUE);
         robot.getLeftDrive().setPower(POWERVALUE);
         robot.getRightArm().setPower(-POWERVALUE);
@@ -71,10 +62,8 @@ public final class Move {
 
     /**
      * Turn the robot to the right
-     *
-     * @param robot - reference to the robot
      */
-    private static void turnRight(final HardwareNut robot) {
+    private void turnRight() {
         robot.getRightDrive().setPower(POWERVALUE);
         robot.getLeftDrive().setPower(-POWERVALUE);
         robot.getRightArm().setPower(POWERVALUE);
@@ -83,10 +72,8 @@ public final class Move {
 
     /**
      * Strafe the robot to the left
-     *
-     * @param robot - reference to the robot
      */
-    private static void strafeLeft(final HardwareNut robot) {
+    private void strafeLeft() {
         robot.getRightDrive().setPower(-STRAFEVALUE);
         robot.getLeftDrive().setPower(STRAFEVALUE);
         robot.getRightArm().setPower(STRAFEVALUE);
@@ -95,10 +82,8 @@ public final class Move {
 
     /**
      * Strafe the robot to the right
-     *
-     * @param robot - reference to the robot
      */
-    private static void strafeRight(final HardwareNut robot) {
+    private void strafeRight() {
         robot.getRightDrive().setPower(POWERVALUE);
         robot.getLeftDrive().setPower(-POWERVALUE);
         robot.getRightArm().setPower(-POWERVALUE);
@@ -107,10 +92,8 @@ public final class Move {
 
     /**
      * Stops the robot so that it is no longer moving or turning
-     *
-     * @param robot - reference to the robot
      */
-    private static void stop(final HardwareNut robot) {
+    private void stop() {
         robot.getRightDrive().setPower(STOPVALUE);
         robot.getLeftDrive().setPower(STOPVALUE);
         robot.getRightArm().setPower(STOPVALUE);
@@ -119,47 +102,46 @@ public final class Move {
 
     /**
      * Test function to run through all of the movement tests
-     *
-     * @param robot - reference to the robot
      */
-    public static void runMovementTest(final HardwareNut robot) {
-        long shortWait = 750;       //750ms pause
-        long longWait = 2000;       //2s pause
+    @Override
+    public void run() {
+        long shortWait = 7500;       //750ms pause
+        long longWait = 1000;       //1s pause
 
-        forward(robot);
+        forward();
         SystemClock.sleep(shortWait);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(longWait);
 
-        backward(robot);
+        backward();
         SystemClock.sleep(shortWait);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(longWait);
 
-        turnLeft(robot);
+        turnLeft();
         SystemClock.sleep(shortWait);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(longWait);
 
-        turnRight(robot);
+        turnRight();
         SystemClock.sleep(shortWait);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(longWait);
 
-        strafeLeft(robot);
+        strafeLeft();
         SystemClock.sleep(shortWait);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(longWait);
 
-        strafeRight(robot);
+        strafeRight();
         SystemClock.sleep(shortWait);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(longWait);
     }
 }

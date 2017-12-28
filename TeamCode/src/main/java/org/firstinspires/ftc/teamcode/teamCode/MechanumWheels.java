@@ -57,12 +57,13 @@ public class MechanumWheels extends OpMode {
      */
     @Override
     public void start() {
-//        Move.runMovementTest(robot);      //TODO - Figure out why this is causing an error
+        new Thread(new Move(robot)).start();    //TODO - Try this and see if it works
     }
 
     @Override
     public void loop() {
 
+        //TODO - Put all of these declarations as private final class variables and see if it still works
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
         double left = gamepad1.left_stick_y;
         double right = gamepad1.right_stick_y;

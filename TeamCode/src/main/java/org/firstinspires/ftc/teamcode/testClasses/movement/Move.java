@@ -24,6 +24,9 @@ public final class Move implements Runnable {
     //Value to set the power to 0 to stop the motor
     private static final float STOPVALUE = 0.0f;
 
+    private static final long SHORTWAIT = 750;
+    private static final long LONGWAIT = 1000;
+
     private HardwareNut robot;
 
     public Move(final HardwareNut robot) {
@@ -100,48 +103,62 @@ public final class Move implements Runnable {
         robot.getLeftArm().setPower(STOPVALUE);
     }
 
+    private void sleepShort() {
+        try {
+            Thread.sleep(SHORTWAIT);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void sleepLong() {
+        try {
+            Thread.sleep(LONGWAIT);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     /**
      * Test function to run through all of the movement tests
      */
     @Override
     public void run() {
-        long shortWait = 7500;       //750ms pause
-        long longWait = 1000;       //1s pause
 
         forward();
-        SystemClock.sleep(shortWait);
+        sleepShort();
 
         stop();
-        SystemClock.sleep(longWait);
+        sleepLong();
 
         backward();
-        SystemClock.sleep(shortWait);
+        sleepShort();
 
         stop();
-        SystemClock.sleep(longWait);
+        sleepLong();
 
         turnLeft();
-        SystemClock.sleep(shortWait);
+        sleepShort();
 
         stop();
-        SystemClock.sleep(longWait);
+        sleepLong();
 
         turnRight();
-        SystemClock.sleep(shortWait);
+        sleepShort();
 
         stop();
-        SystemClock.sleep(longWait);
+        sleepLong();
 
         strafeLeft();
-        SystemClock.sleep(shortWait);
+        sleepShort();
 
         stop();
-        SystemClock.sleep(longWait);
+        sleepLong();
 
         strafeRight();
-        SystemClock.sleep(shortWait);
+        sleepShort();
 
         stop();
-        SystemClock.sleep(longWait);
+        sleepLong();
     }
 }

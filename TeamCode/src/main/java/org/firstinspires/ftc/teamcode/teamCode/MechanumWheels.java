@@ -57,7 +57,8 @@ public class MechanumWheels extends OpMode {
      */
     @Override
     public void start() {
-        new Thread(new Move(robot)).start();    //TODO - Try this and see if it works
+        Runnable moveTest = new Move(robot);
+        new Thread(moveTest).start();    //TODO - Try this and see if it works
     }
 
     @Override

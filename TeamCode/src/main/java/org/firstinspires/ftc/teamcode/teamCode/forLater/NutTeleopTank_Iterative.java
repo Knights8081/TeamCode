@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -49,6 +50,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name="Nut: Teleop Tank", group="Nut")
+@Disabled
 public class NutTeleopTank_Iterative extends OpMode{
 
     /* Declare OpMode members. */

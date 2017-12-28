@@ -100,8 +100,8 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
         encoderDrive(TURN_SPEED,   4, -4, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         encoderDrive(DRIVE_SPEED, 8, 8, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
-        robot.getClaw().setPosition(1.0);            // S4: Stop and close the claw.
-        robot.getClaw().setPosition(0.0);
+        robot.getrightClaw().setPosition(1.0);            // S4: Stop and close the claw.
+        robot.getrightClaw().setPosition(0.0);
         sleep(1000);     // pause for servos to move
 
         telemetry.addData("Path", "Complete");

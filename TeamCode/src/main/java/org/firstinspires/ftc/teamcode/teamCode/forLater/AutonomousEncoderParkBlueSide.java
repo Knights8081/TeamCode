@@ -58,7 +58,6 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double armPosition = robot.ARM_HOME;                   // Servo safe position
     double clawPosition = robot.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -177,17 +176,17 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getrightClaw().setPosition(robot.CLAW_MAX_RANGE);
             sleep(1000);
                 if (sensorColor.red() >= 60) {
                 encoderDrive(DRIVE_SPEED, -2, -2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getClaw().setPosition(ARM_HOME);
+                robot.getrightClaw().setPosition(ARM_HOME);
                 stop();
             }
 
             else if (sensorColor.blue() >= 60) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 3.0);
-                robot.getClaw().setPosition(ARM_HOME);
+                robot.getrightClaw().setPosition(ARM_HOME);
                 stop();
             }
             if (sensorColor.red() < 60) {

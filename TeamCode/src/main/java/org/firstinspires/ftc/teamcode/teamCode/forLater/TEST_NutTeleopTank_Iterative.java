@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -50,7 +51,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  */
 
 @TeleOp(name="TEST Nut: Teleop Tank", group="Nut")
-
+@Disabled
 public class TEST_NutTeleopTank_Iterative extends OpMode {
 
     /* Declare OpMode members. */

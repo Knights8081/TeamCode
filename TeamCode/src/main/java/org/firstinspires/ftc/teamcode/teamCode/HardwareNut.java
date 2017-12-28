@@ -56,8 +56,8 @@ public class HardwareNut {
     private DcMotor  rightDrive  = null;
     private DcMotor  leftArm     = null;
     private DcMotor  rightArm    = null;
-    private Servo    arm         = null;
-    private Servo    claw        = null;
+    private Servo    leftClaw         = null;
+    private Servo    rightClaw        = null;
     private Servo    idolHand    = null;
     private DcMotor  liftArm     = null;
     private DcMotor  idolSlide   = null;
@@ -76,10 +76,9 @@ public class HardwareNut {
     public static final double IDOLHAND_MAX_RANGE = 1.3 ;
     public static final double CLAW_MIN_RANGE  = 0.05;
     public static final double CLAW_MAX_RANGE  = 1.3;
-    public static final double ARM_MIN_RANGE  = 0.05;
-    public static final double ARM_MAX_RANGE  = 1.0;
 
-    public static final double ARM_HOME = 0.08;
+
+
     public static final double CLAW_HOME = 0.08;
     public static final double IDOLHAND_HOME = 0.08;
 
@@ -110,12 +109,12 @@ public class HardwareNut {
         return rightArm;
     }
 
-    public Servo getArm() {
-        return arm;
+    public Servo getleftClaw() {
+        return leftClaw;
     }
 
-    public Servo getClaw() {
-        return claw;
+    public Servo getrightClaw() {
+        return rightClaw;
     }
 
     public Servo getIdolHand() {
@@ -217,11 +216,11 @@ public class HardwareNut {
 
 
         // Define and initialize ALL installed servos.
-        claw  = hwMap.get(Servo.class, "left_hand");
-        arm = hwMap.get(Servo.class, "right_hand");
+        rightClaw  = hwMap.get(Servo.class, "right_claw");
+        leftClaw = hwMap.get(Servo.class, "left_claw");
         idolHand = hwMap.get(Servo.class, "idol_hand");
-        claw.setPosition(MID_SERVO);
-        arm.setPosition(MID_SERVO);
+        rightClaw.setPosition(MID_SERVO);
+        leftClaw.setPosition(MID_SERVO);
     }
 }
 

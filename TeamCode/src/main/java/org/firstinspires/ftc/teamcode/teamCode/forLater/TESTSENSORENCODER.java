@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,7 +21,7 @@ import java.util.Locale;
  * Created by afield on 11/16/2017.
  */
 @Autonomous(name="TEST DRIVING", group="Blue")
-
+@Disabled
 
 public class TESTSENSORENCODER extends LinearOpMode {
     /* Declare OpMode members. */
@@ -28,11 +29,10 @@ public class TESTSENSORENCODER extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    public final static double ARM_HOME = 0.08;
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double armPosition = robot.ARM_HOME;                   // Servo safe position
+    double armPosition = robot.CLAW_HOME;                   // Servo safe position
     double clawPosition = robot.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -162,7 +162,7 @@ public class TESTSENSORENCODER extends LinearOpMode {
                 stop();
             } else if (sensorColor.blue() >= 60) {
                 encoderDrive(DRIVE_SPEED, 1, 1, 3.0);
-                robot.getClaw().setPosition(ARM_HOME);
+                robot.getrightClaw().setPosition(CLAW_HOME);
                 encoderDrive(DRIVE_SPEED, -3, -3, 4.0);
                 encoderDrive(TURN_SPEED, 5, -5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -6, -6, 4.0);

@@ -64,7 +64,6 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double          armPosition     = robot.ARM_HOME;                   // Servo safe position
     double          clawPosition    = robot.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1220;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -184,10 +183,10 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
 
 
 
-            robot.getClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getrightClaw().setPosition(robot.CLAW_MAX_RANGE);
             if (sensorColor.red() >= 65)
             {   encoderDrive(DRIVE_SPEED, 2, 2, 4.0);
-                robot.getClaw().setPosition(ARM_HOME);
+                robot.getrightClaw().setPosition(ARM_HOME);
                 encoderDrive(DRIVE_SPEED,  -2,  -3, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
                 encoderDrive(TURN_SPEED,   2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -10, -10, 4.0);
@@ -198,7 +197,7 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
 
             else if (sensorColor.blue() >= 65) {
                 encoderDrive(DRIVE_SPEED, -2, -3, 3.0);
-                robot.getClaw().setPosition(ARM_HOME);
+                robot.getrightClaw().setPosition(ARM_HOME);
                 encoderDrive(TURN_SPEED, 2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -10, -10, 4.0);
                 encoderDrive(TURN_SPEED, -5, 5, 4.0);

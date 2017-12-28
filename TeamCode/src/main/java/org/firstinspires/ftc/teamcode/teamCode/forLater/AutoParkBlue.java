@@ -16,11 +16,10 @@ public class AutoParkBlue extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    public final static double ARM_HOME = 0.08;
+
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double armPosition = robot.ARM_HOME;                   // Servo safe position
     double clawPosition = robot.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP

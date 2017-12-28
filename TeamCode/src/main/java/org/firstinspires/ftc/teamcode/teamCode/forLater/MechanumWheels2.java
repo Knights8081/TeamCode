@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
  * Created by afield on 10/18/2017.
  */
 @TeleOp(name="Nut: MechanumWheels2", group="Nut")
-
+@Disabled
 public class MechanumWheels2 extends OpMode {
     /* Declare OpMode members. */
     HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware

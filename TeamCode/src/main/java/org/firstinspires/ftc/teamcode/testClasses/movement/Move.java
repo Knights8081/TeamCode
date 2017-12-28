@@ -25,7 +25,7 @@ public final class Move {
     private static final float STOPVALUE = 0.0f;
 
     private static final long SHORTWAIT = 300;      //300ms pause
-    private static final long LONGWAIT = 425;      //425ms pause
+    private static final long LONGWAIT = 425;       //425ms pause
 
     /**
      * Move the robot forward

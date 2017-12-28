@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  *
  * @author Corbin Young
  */
-public final class Move implements Runnable {
+public final class Move {
 
     private static final float POWERVALUE = 0.75f;
     private static final float STRAFEVALUE = 0.6f;
@@ -24,8 +24,8 @@ public final class Move implements Runnable {
     //Value to set the power to 0 to stop the motor
     private static final float STOPVALUE = 0.0f;
 
-    private static final long SHORTWAIT = 750;
-    private static final long LONGWAIT = 1000;
+    private static final long SHORTWAIT = 300;      //300ms pause
+    private static final long LONGWAIT = 425;      //425ms pause
 
     private HardwareNut robot;
 
@@ -104,26 +104,17 @@ public final class Move implements Runnable {
     }
 
     private void sleepShort() {
-        try {
-            Thread.sleep(SHORTWAIT);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        SystemClock.sleep(SHORTWAIT);
     }
 
     private void sleepLong() {
-        try {
-            Thread.sleep(LONGWAIT);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        SystemClock.sleep(LONGWAIT);
     }
 
     /**
      * Test function to run through all of the movement tests
      */
-    @Override
-    public void run() {
+    public void runMovementTest() {
 
         forward();
         sleepShort();

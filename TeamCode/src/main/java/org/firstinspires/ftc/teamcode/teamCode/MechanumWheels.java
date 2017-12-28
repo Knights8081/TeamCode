@@ -6,12 +6,14 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
+import org.firstinspires.ftc.teamcode.testClasses.movement.Move;
 
 /**
- * Created by afield on 10/18/2017.
+ * Created 10/18/2017
+ *
+ * @author Anna Field
  */
 @TeleOp(name="Nut: MechanumWheels", group="Nut")
-
 public class MechanumWheels extends OpMode {
     /* Declare OpMode members. */
     private HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware
@@ -19,17 +21,17 @@ public class MechanumWheels extends OpMode {
     double          armPosition     = robot.ARM_HOME;                   // Servo safe position
     double          clawPosition    = robot.CLAW_HOME;
     double          handPosition    = robot.IDOLHAND_HOME;
-    final double    ARM_SPEED       = 0.01 ;                            // sets rate to move servo
+//    final double    ARM_SPEED       = 0.01 ;                            // sets rate to move servo
 
-    double clawOffset = 0.5;                  // Servo mid position
+//    double clawOffset = 0.5;                  // Servo mid position
     final double CLAW_SPEED = 0.02;// sets rate to move servo
     final double Idol_SPEED = 0.02;
-    double RT = 0.0;
-    double LT = 0.0;
-    double lift_up = 0.0;
+//    double RT = 0.0;
+//    double LT = 0.0;
+//    double lift_up = 0.0;
 
 
-    /*
+    /**
      * Code to run ONCE when the driver hits INIT
      */
     @Override
@@ -43,36 +45,23 @@ public class MechanumWheels extends OpMode {
         telemetry.addData("Say", "Hello Driver");    //
     }
 
-    /*
+    /**
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
     @Override
     public void init_loop() {
     }
 
-    /*
+    /**
      * Code to run ONCE when the driver hits PLAY
      */
     @Override
     public void start() {
-
-
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
+//        Move.runMovementTest(robot);
     }
 
     @Override
     public void loop() {
-//        double left;
-//        double right;
-//        double left2;
-//        double right2;
-//        double RT;
-//        double LT;
-//        double RT2;
-//        double LT2;
-
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
         double left = gamepad1.left_stick_y;
@@ -148,6 +137,4 @@ public class MechanumWheels extends OpMode {
 
 
     }
-
-    }
-
+}

@@ -92,7 +92,7 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
                 robot.getLeftDrive().getCurrentPosition(),
                 robot.getRightDrive().getCurrentPosition(),
                 robot.getRightArm().getCurrentPosition(),
-                robot.getRightDrive().getCurrentPosition());
+                robot.getLeftArm().getCurrentPosition());
 
 
         telemetry.update();
@@ -102,7 +102,7 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
         DistanceSensor sensorDistance;
 
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap);    //TODO why twice??
 
 
         // get a reference to the color sensor.

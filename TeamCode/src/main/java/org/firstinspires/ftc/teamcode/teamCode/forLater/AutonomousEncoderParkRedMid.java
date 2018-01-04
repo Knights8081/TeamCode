@@ -180,16 +180,16 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getrightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
 
             if (sensorColor.red() >= 60) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
 
                 sleep(5000);
             } else if (sensorColor.blue() >= 60) {
                 encoderDrive(DRIVE_SPEED, -2, -2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
 
                 sleep(5000);
             }

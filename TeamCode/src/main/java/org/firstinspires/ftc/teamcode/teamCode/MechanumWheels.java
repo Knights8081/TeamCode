@@ -16,11 +16,11 @@ import org.firstinspires.ftc.teamcode.testClasses.movement.Move;
 @TeleOp(name="Nut: MechanumWheels", group="Nut")
 public class MechanumWheels extends OpMode {
     /* Declare OpMode members. */
-    private HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware
+    private final HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware
     // could also use HardwarePushbotMatrix class.
-    private double          leftClawPosition    = robot.CLAW_HOME;
-    private double          rightClawPosition    = robot.CLAW_HOME;
-    private double          handPosition    = robot.IDOLHAND_HOME;
+    private double          leftClawPosition    = HardwareNut.CLAW_HOME;
+    private double          rightClawPosition    = HardwareNut.CLAW_HOME;
+    private double          handPosition    = HardwareNut.IDOLHAND_HOME;
 //    final double    CLAW_SPEED       = 0.01 ;                            // sets rate to move servo
 
 //    double clawOffset = 0.5;                  // Servo mid position
@@ -62,7 +62,7 @@ public class MechanumWheels extends OpMode {
      */
     @Override
     public void start() {
-        Move.runMovementTest(robot);
+//        Move.runMovementTest(robot);
     }
 
     @Override
@@ -110,21 +110,21 @@ public class MechanumWheels extends OpMode {
 
         if (gamepad2.x) {
             leftClawPosition -= CLAW_SPEED;
-            rightClawPosition += CLAW_SPEED;
+            rightClawPosition -= CLAW_SPEED;
 
         }
 
         else if (gamepad2.b) {
             leftClawPosition += CLAW_SPEED;
-            rightClawPosition -= CLAW_SPEED;
+            rightClawPosition += CLAW_SPEED;
 
         }
 
-        leftClawPosition  = Range.clip(leftClawPosition, robot.CLAW_MIN_RANGE, robot.CLAW_MAX_RANGE);
-        rightClawPosition = Range.clip(rightClawPosition, robot.CLAW_MIN_RANGE, robot.CLAW_MAX_RANGE);
+        leftClawPosition  = Range.clip(leftClawPosition, HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
+        rightClawPosition = Range.clip(rightClawPosition, HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
 
-        robot.getleftClaw().setPosition(leftClawPosition);
-        robot.getrightClaw().setPosition(rightClawPosition);
+        robot.getLeftClaw().setPosition(leftClawPosition);
+        robot.getRightClaw().setPosition(rightClawPosition);
 
 //        if (gamepad2.a)
 //            handPosition += Idol_SPEED;

@@ -155,10 +155,10 @@ public class AutonomousEncoderSensorTest extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getrightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
             if (sensorColor.red() >= 65)
             {   encoderDrive(DRIVE_SPEED,  -2,  -3, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
                 encoderDrive(TURN_SPEED,   2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -8, -8, 4.0);
                 sleep(5000);

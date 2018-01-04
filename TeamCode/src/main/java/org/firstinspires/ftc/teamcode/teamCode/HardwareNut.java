@@ -109,11 +109,11 @@ public class HardwareNut {
         return rightArm;
     }
 
-    public Servo getleftClaw() {
+    public Servo getLeftClaw() {
         return leftClaw;
     }
 
-    public Servo getrightClaw() {
+    public Servo getRightClaw() {
         return rightClaw;
     }
 
@@ -139,12 +139,8 @@ public class HardwareNut {
 
     /**
      * Initialize all standard hardware interfaces
-     *
-     * @param ahwMap - TODO figure out what this is
      */
-    public void init(final HardwareMap ahwMap) {
-        // Save reference to Hardware map
-        HardwareMap hwMap = ahwMap;
+    public void init(final HardwareMap hwMap) {
 
         // Define and Initialize Motors
         leftDrive  = hwMap.get(DcMotor.class, "left_drive");

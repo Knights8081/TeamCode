@@ -177,17 +177,17 @@ public class AutonomousEncoderParkRedSide extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getrightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
             sleep(1000);
             if (sensorColor.red() >= 60) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 3.0);
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
                 stop();
             }
 
             else if (sensorColor.blue() >= 60) {
                 encoderDrive(DRIVE_SPEED, -2, -2, 3.0);
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
                 stop();
             }
             if (sensorColor.red() < 60) {

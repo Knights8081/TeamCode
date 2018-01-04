@@ -162,7 +162,7 @@ public class TESTSENSORENCODER extends LinearOpMode {
                 stop();
             } else if (sensorColor.blue() >= 60) {
                 encoderDrive(DRIVE_SPEED, 1, 1, 3.0);
-                robot.getrightClaw().setPosition(CLAW_HOME);
+                robot.getRightClaw().setPosition(CLAW_HOME);
                 encoderDrive(DRIVE_SPEED, -3, -3, 4.0);
                 encoderDrive(TURN_SPEED, 5, -5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -6, -6, 4.0);

@@ -183,10 +183,10 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
 
 
 
-            robot.getrightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
             if (sensorColor.red() >= 65)
             {   encoderDrive(DRIVE_SPEED, 2, 2, 4.0);
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
                 encoderDrive(DRIVE_SPEED,  -2,  -3, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
                 encoderDrive(TURN_SPEED,   2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -10, -10, 4.0);
@@ -197,7 +197,7 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
 
             else if (sensorColor.blue() >= 65) {
                 encoderDrive(DRIVE_SPEED, -2, -3, 3.0);
-                robot.getrightClaw().setPosition(ARM_HOME);
+                robot.getRightClaw().setPosition(ARM_HOME);
                 encoderDrive(TURN_SPEED, 2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -10, -10, 4.0);
                 encoderDrive(TURN_SPEED, -5, 5, 4.0);

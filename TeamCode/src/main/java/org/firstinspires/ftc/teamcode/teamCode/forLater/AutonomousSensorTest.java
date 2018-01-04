@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -19,6 +20,7 @@ import java.util.Locale;
  * Created by afield on 9/27/2017.
  */
 @Autonomous (name="Sensor Test", group="Test")
+@Disabled
 public class AutonomousSensorTest extends LinearOpMode {
     HardwareNut robot = new HardwareNut();
     SensorREVColorDistance hwSensor = new SensorREVColorDistance();

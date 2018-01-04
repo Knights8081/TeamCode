@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  * Created by afield on 11/18/2017.
  */
 @Autonomous(name="Pushbot: Auto Drive By Encoder 2", group="Pushbot")
+@Disabled
 public class AutoParkBlue extends LinearOpMode {
     HardwareNut robot = new HardwareNut();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();

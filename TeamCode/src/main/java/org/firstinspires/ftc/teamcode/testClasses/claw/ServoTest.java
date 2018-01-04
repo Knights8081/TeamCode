@@ -1,23 +1,23 @@
-package org.firstinspires.ftc.teamcode.teamCode;
+package org.firstinspires.ftc.teamcode.testClasses.claw;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
 
 /**
  * @author Luke Frazer
  */
-@TeleOp(name="Nut: Servo test", group="Nut")
+@TeleOp(name="Nut: Servo test 1", group="Nut")
 public class ServoTest extends OpMode {
     private final HardwareNut robot = new HardwareNut();
 
     private double          leftClawPosition    = HardwareNut.CLAW_HOME;
     private double          rightClawPosition    = HardwareNut.CLAW_HOME;
-    private double          handPosition    = HardwareNut.IDOLHAND_HOME;
 
-    private final double CLAW_SPEED = 0.02;
+    private final double CLAW_SPEED = 0.05;
 
     private final double[] positions = {leftClawPosition, rightClawPosition};
 

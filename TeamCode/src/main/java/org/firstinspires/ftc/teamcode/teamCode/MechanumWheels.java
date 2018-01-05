@@ -2,11 +2,9 @@ package org.firstinspires.ftc.teamcode.teamCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
+import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
-import org.firstinspires.ftc.teamcode.testClasses.movement.Move;
 
 /**
  * Created 10/18/2017
@@ -15,17 +13,18 @@ import org.firstinspires.ftc.teamcode.testClasses.movement.Move;
  */
 @TeleOp(name="Nut: MechanumWheels", group="Nut")
 public class MechanumWheels extends OpMode {
-    /* Declare OpMode members. */
-    private final HardwareNut robot = new HardwareNut(); // use the class created to define a Pushbot's hardware
-    // could also use HardwarePushbotMatrix class.
-    private double          leftClawPosition    = HardwareNut.CLAW_HOME;
-    private double          rightClawPosition    = HardwareNut.CLAW_HOME;
-    private double          handPosition    = HardwareNut.IDOLHAND_HOME;
-//    final double    CLAW_SPEED       = 0.01 ;                            // sets rate to move servo
 
-//    double clawOffset = 0.5;                  // Servo mid position
-    private final double CLAW_SPEED = 0.02;             // sets rate to move servo
-    private final double Idol_SPEED = 0.02;
+    private final HardwareNut robot = new HardwareNut();        //reference for robot hardware
+
+    /**
+     * Keeps track of the positions for the two servos that control the claw
+     *
+     *  positions[0] -> left claw position
+     *  positions[1] -> right claw position
+     */
+    private final double[] positions = {HardwareNut.CLAW_HOME, HardwareNut.CLAW_HOME};
+
+    /* Game pad controller reference declarations */
     private double left;
     private double right;
     private double left2;
@@ -35,6 +34,9 @@ public class MechanumWheels extends OpMode {
     private double RT2;
     private double LT2;
 
+    /* Other fields */
+    private double handPosition = HardwareNut.IDOLHAND_HOME;
+    private final double IDOL_SPEED = 0.05; //TODO - What is this? Can it be made a global constant in HardwareNut
 
     /**
      * Code to run ONCE when the driver hits INIT
@@ -62,12 +64,14 @@ public class MechanumWheels extends OpMode {
      */
     @Override
     public void start() {
-//        Move.runMovementTest(robot);
+//        Move.runMovementTest(robot);  //This is a test function that only is run for debugging issues involving movement
     }
 
     @Override
     public void loop() {
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
+
+        /* SET REFERENCES -----------------------------------------------------------------------*/
         left = gamepad1.left_stick_y;
         right = gamepad1.right_stick_y;
         left2 = gamepad2.left_stick_y;
@@ -78,26 +82,24 @@ public class MechanumWheels extends OpMode {
         LT2 = gamepad2.left_trigger;
 
 
-
+        /* SET WHEEL POWER ----------------------------------------------------------------------*/
         robot.getLeftDrive().setPower(left);
         robot.getRightDrive().setPower(right);
         robot.getLeftArm().setPower(left);
         robot.getRightArm().setPower(right);
 
-
-
-        // Use gamepad left & right Bumpers to open and close the claw
-        //if (gamepad2.right_bumper){
-            //robot.leftClaw = clawOffset += CLAW_SPEED;}
-            //robot.leftClaw = +CLAW_SPEED;}
-
-       // else if (gamepad2.left_bumper){
-            //robot.rightClaw = clawOffset -= CLAW_SPEED;}
-            //robot.rightClaw = -CLAW_SPEED;}
+        /*
+         * TODO - I think we can delete this section since we're using x and b for the claw
+         * Use gamepad left & right Bumpers to open and close the claw
+         * if (gamepad2.right_bumper){
+         *     robot.leftClaw = clawOffset += CLAW_SPEED;}
+         *     robot.leftClaw = +CLAW_SPEED;}
+         * else if (gamepad2.left_bumper){
+         *     robot.rightClaw = clawOffset -= CLAW_SPEED;}
+         *     robot.rightClaw = -CLAW_SPEED;}
+         */
 
 //        robot.getGlyph().setPower(right2);
-
-
 
 //        while (gamepad2.dpad_right){
 //            robot.getIdolLift().setPower(.5);}
@@ -106,55 +108,39 @@ public class MechanumWheels extends OpMode {
 //        while (gamepad2.dpad_left){
 //            robot.getIdolLift().setPower(-.5);}
 
+        /* CHECK FOR CLAW UPDATE ----------------------------------------------------------------*/
+        if (gamepad2.x)
+            MoveClaw.closeClaw(positions, HardwareNut.CLAW_SPEED);
+        else if (gamepad2.b)
+            MoveClaw.openClaw(positions, HardwareNut.CLAW_SPEED);
 
-
-        if (gamepad2.x) {
-            leftClawPosition -= CLAW_SPEED;
-            rightClawPosition -= CLAW_SPEED;
-
-        }
-
-        else if (gamepad2.b) {
-            leftClawPosition += CLAW_SPEED;
-            rightClawPosition += CLAW_SPEED;
-
-        }
-
-        leftClawPosition  = Range.clip(leftClawPosition, HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
-        rightClawPosition = Range.clip(rightClawPosition, HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
-
-        robot.getLeftClaw().setPosition(leftClawPosition);
-        robot.getRightClaw().setPosition(rightClawPosition);
+        robot.getLeftClaw().setPosition(positions[0]);
+        robot.getRightClaw().setPosition(positions[1]);
 
 //        if (gamepad2.a)
 //            handPosition += Idol_SPEED;
 //        else if (gamepad2.y)
 //            handPosition -= Idol_SPEED;
+//
+//
+//        handPosition  = Range.clip(handPosition, HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
+//        robot.getIdolHand().setPosition(handPosition);
 
-
-
-
-
-        handPosition  = Range.clip(handPosition, robot.IDOLHAND_MIN_RANGE, robot.IDOLHAND_MAX_RANGE);
-        robot.getIdolHand().setPosition(handPosition);
-
-
-
-
+        /* SET ARM POWER ------------------------------------------------------------------------*/
         robot.getLiftArm().setPower(left2);
 
 
-
+        /* CHECK FOR IDOL SLIDE UPDATE ----------------------------------------------------------*/
         if (RT2 > 0.1)
             robot.getIdolSlide().setPower(.5*RT2);
         else if (LT2 > 0.1)
             robot.getIdolSlide().setPower(-.5*LT2);
 
+
+        /* CHECK FOR STRAFING -------------------------------------------------------------------*/
         if (RT > 0.1)
             StrafeByHand.right(robot, RT);
         else if (LT > 0.1)
             StrafeByHand.left(robot, LT);
-
-
     }
 }

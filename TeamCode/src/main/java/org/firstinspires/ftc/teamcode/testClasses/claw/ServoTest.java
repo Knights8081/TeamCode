@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.testClasses.claw;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
@@ -12,14 +11,16 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
  */
 @TeleOp(name="Nut: Servo test 1", group="Nut")
 public class ServoTest extends OpMode {
-    private final HardwareNut robot = new HardwareNut();
 
-    private double          leftClawPosition    = HardwareNut.CLAW_HOME;
-    private double          rightClawPosition    = HardwareNut.CLAW_HOME;
+    private final HardwareNut robot = new HardwareNut();    //reference for robot hardware
 
-    private final double CLAW_SPEED = 0.05;
-
-    private final double[] positions = {leftClawPosition, rightClawPosition};
+    /**
+     * Keeps track of the positions for the two servos that control the claw
+     *
+     *  positions[0] -> left claw position
+     *  positions[1] -> right claw position
+     */
+    private final double[] positions = {HardwareNut.CLAW_HOME, HardwareNut.CLAW_HOME};
 
     @Override
     public void init() {
@@ -50,9 +51,9 @@ public class ServoTest extends OpMode {
     public void loop() {
 
         if (gamepad2.x)
-            MoveClaw.closeClaw(positions, CLAW_SPEED);
+            MoveClaw.closeClaw(positions, HardwareNut.CLAW_SPEED);
         else if (gamepad2.b)
-            MoveClaw.openClaw(positions, CLAW_SPEED);
+            MoveClaw.openClaw(positions, HardwareNut.CLAW_SPEED);
 
         setPositions();
     }

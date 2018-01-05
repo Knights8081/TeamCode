@@ -108,11 +108,16 @@ public class PushbotAutoDriveByEncoder_Linear2 extends LinearOpMode {
 
         // Step through each leg of the path,
         // NOTE: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.getLeftClaw().setPosition(0.8);            // S4: Stop and close the claw.
-        robot.getRightClaw().setPosition(0.8);
-        encoderDrive(DRIVE_SPEED,  -12,  -12, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   -18, 18, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
+
+
+        robot.getLeftClaw().setPosition(0.5);            // S4: Stop and close the claw.
+        robot.getRightClaw().setPosition(0.5);
+
+        sleep(1000);
+
+//        encoderDrive(DRIVE_SPEED,  -12,  -12, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+//        encoderDrive(TURN_SPEED,   -18, 18, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+//        encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
 
 
         robot.getLeftClaw().setPosition(1.0);            // S4: Stop and close the claw.

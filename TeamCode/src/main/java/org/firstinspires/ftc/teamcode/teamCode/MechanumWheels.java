@@ -15,14 +15,7 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
 public class MechanumWheels extends OpMode {
 
     private final HardwareNut robot = new HardwareNut();        //reference for robot hardware
-
-    /**
-     * Keeps track of the positions for the two servos that control the claw
-     *
-     *  positions[0] -> left claw position
-     *  positions[1] -> right claw position
-     */
-    private final double[] positions = {HardwareNut.CLAW_HOME, HardwareNut.CLAW_HOME};
+    private double[] clawPositions;                             //handles updating positions for the claw
 
     /* Game pad controller reference declarations */
     private double left;
@@ -33,10 +26,6 @@ public class MechanumWheels extends OpMode {
     private double LT;
     private double RT2;
     private double LT2;
-
-    /* Other fields */
-    private double handPosition = HardwareNut.IDOLHAND_HOME;
-    private final double IDOL_SPEED = 0.05; //TODO - What is this? Can it be made a global constant in HardwareNut
 
     /**
      * Code to run ONCE when the driver hits INIT
@@ -109,13 +98,15 @@ public class MechanumWheels extends OpMode {
 //            robot.getIdolLift().setPower(-.5);}
 
         /* CHECK FOR CLAW UPDATE ----------------------------------------------------------------*/
-        if (gamepad2.x)
-            MoveClaw.closeClaw(positions, HardwareNut.CLAW_SPEED);
-        else if (gamepad2.b)
-            MoveClaw.openClaw(positions, HardwareNut.CLAW_SPEED);
+        clawPositions = robot.getClawPositions();
 
-        robot.getLeftClaw().setPosition(positions[0]);
-        robot.getRightClaw().setPosition(positions[1]);
+        if (gamepad2.x)
+            MoveClaw.closeClaw(clawPositions, HardwareNut.CLAW_SPEED);
+        else if (gamepad2.b)
+            MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
+
+        robot.getLeftClaw().setPosition(clawPositions[0]);
+        robot.getRightClaw().setPosition(clawPositions[1]);
 
 //        if (gamepad2.a)
 //            handPosition += Idol_SPEED;

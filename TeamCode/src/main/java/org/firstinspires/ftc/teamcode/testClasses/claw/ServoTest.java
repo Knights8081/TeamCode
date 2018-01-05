@@ -7,20 +7,18 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
 
 /**
+ * This class tests the functionality for a driver opening and closing the claw.
+ *
+ * If the driver pushes X, the claw will close
+ * If the driver pushes B, the claw will open
+ *
  * @author Luke Frazer
  */
 @TeleOp(name="Nut: Servo test 1", group="Nut")
 public class ServoTest extends OpMode {
 
     private final HardwareNut robot = new HardwareNut();    //reference for robot hardware
-
-    /**
-     * Keeps track of the positions for the two servos that control the claw
-     *
-     *  positions[0] -> left claw position
-     *  positions[1] -> right claw position
-     */
-    private final double[] positions = {HardwareNut.CLAW_HOME, HardwareNut.CLAW_HOME};
+    private double[] positions;
 
     @Override
     public void init() {
@@ -49,6 +47,7 @@ public class ServoTest extends OpMode {
 
     @Override
     public void loop() {
+        positions = robot.getClawPositions();
 
         if (gamepad2.x)
             MoveClaw.closeClaw(positions, HardwareNut.CLAW_SPEED);

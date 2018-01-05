@@ -52,10 +52,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class HardwareNut {
 
     /* Define Motor references ------------------------------------------------------------------*/
-    private DcMotor  leftDrive   = null;
-    private DcMotor  rightDrive  = null;
-    private DcMotor  leftArm     = null;
-    private DcMotor  rightArm    = null;
+    private DcMotor  leftDrive   = null;        // Front left wheel
+    private DcMotor  rightDrive  = null;        // Front right wheel
+    private DcMotor  leftArm     = null;        // Back left wheel
+    private DcMotor  rightArm    = null;        // Back right wheel
     private DcMotor  liftArm     = null;
     private DcMotor  idolSlide   = null;
     private DcMotor  idolLift    = null;
@@ -83,6 +83,7 @@ public class HardwareNut {
     public static final double IDOLHAND_MIN_RANGE  = 0.05 ;
     public static final double IDOLHAND_MAX_RANGE = 1.3 ;
     public static final double IDOLHAND_HOME = 0.08;
+    public static final double IDOL_SPEED = 0.05;
 
 
     /**
@@ -91,6 +92,7 @@ public class HardwareNut {
     public HardwareNut(){
     }
 
+    /* Motor getters ----------------------------------------------------------------------------*/
     public DcMotor getLeftDrive() {
         return leftDrive;
     }
@@ -105,18 +107,6 @@ public class HardwareNut {
 
     public DcMotor getRightArm() {
         return rightArm;
-    }
-
-    public Servo getLeftClaw() {
-        return leftClaw;
-    }
-
-    public Servo getRightClaw() {
-        return rightClaw;
-    }
-
-    public Servo getIdolHand() {
-        return idolHand;
     }
 
     public DcMotor getLiftArm() {
@@ -135,8 +125,32 @@ public class HardwareNut {
         return glyph;
     }
 
+    /* Servo getters ----------------------------------------------------------------------------*/
+    public Servo getLeftClaw() {
+        return leftClaw;
+    }
+
+    public Servo getRightClaw() {
+        return rightClaw;
+    }
+
+    public Servo getIdolHand() {
+        return idolHand;
+    }
+
+    public double[] getClawPositions() {
+        return new double[]{leftClaw.getPosition(), rightClaw.getPosition()};
+    }
+
+    public double getIdolHandPosition() {
+        return idolHand.getPosition();
+    }
+
+    /* Functional methods -----------------------------------------------------------------------*/
     /**
      * Initialize all standard hardware interfaces
+     *
+     * @param hwMap - reference to the hardware map on the user interface program
      */
     public void init(final HardwareMap hwMap) {
 
@@ -168,14 +182,6 @@ public class HardwareNut {
 //        DcMotor FL = hwMap.get(DcMotor.class, "left_drive");
 //        DcMotor BR = hwMap.get(DcMotor.class, "right_drive");
 //        DcMotor BL = hwMap.get(DcMotor.class, "right_drive");
-
-
-
-        //TODO - This needs to be documented somewhere else and taken out of here
-        //leftDrive = FrontLeft
-        //rightDrive = FrontRight
-        //leftArm = Backleft
-        //rightArm = Backright
 
 
 
@@ -215,8 +221,8 @@ public class HardwareNut {
         leftClaw = hwMap.get(Servo.class, "left_claw");
         idolHand = hwMap.get(Servo.class, "idol_hand");
 
-        rightClaw.setPosition(MID_SERVO);
-        leftClaw.setPosition(MID_SERVO);
+        rightClaw.setPosition(CLAW_MIN_RANGE);
+        leftClaw.setPosition(CLAW_MAX_RANGE);
     }
 }
 

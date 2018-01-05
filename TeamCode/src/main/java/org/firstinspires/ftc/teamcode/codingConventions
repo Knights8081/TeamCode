@@ -277,8 +277,8 @@ As you can see, the static value isn't changing no matter what I set the instanc
 
  2) ExampleClass.getInstanceValue()
 
-#1 wouldn't work because you're trying to reference something that isn't tied to an instance from an
- instance.
+#1 this will work, but it will throw a warning because you're trying to reference something that is
+    static via an instance instead of the class
 
 #2 wouldn't work because you're trying to reference in instance value without an instance.
 
@@ -350,6 +350,9 @@ Either way is acceptable. It just comes down to personal preference. However, ma
 
 Also, MAKE SURE YOU INDENT! The actual amount of indentation is up for debate, but what isn't is that
  you need to do it. It makes code way harder to read and debug if there isn't proper indentation.
+ There are a lot of errors that are caused because people thought that something was a part of some
+ loop or if-statement and it wasn't, or vice versa. Proper indentation is the best way to avoid these
+ logic errors.
 
 Also, final note on this: There are times when you can avoid using curly brackets. If you write
  something like a while-loop, or a for-loop, or an if-statement, and the body only has one line,
@@ -363,7 +366,7 @@ else
     System.out.println("FALSE");
 
 
-Here's an example of needing braces:
+Here's an example of needing brackets:
 
 if(true) {
     int x = Math.pow(2, 5);              //x = 2^5
@@ -374,7 +377,7 @@ else
 
 
 The exception to this is any method or constructor. Even if their body is only one line, methods
- and constructors must always have braces
+ and constructors must always have brackets
 
 /* --------------------------------------------------------------------------------------------- */
 
@@ -393,5 +396,80 @@ Square brackets - []
 
 /* --------------------------------------------------------------------------------------------- */
 
+Errors:
+
+This specific section will deal with more than just Java. What I'm going to discuss here can be seen
+ in any programming language. Obviously, errors occur everywhere, but I'm going to be talking about
+ two specific kinds of errors: syntax and logic
+
+SYNTAX
+
+Syntax errors are the nice ones. I say this because they are the ones that you don't have to worry
+ about catching. These are things that the compiler catches for you. Another term for a syntax error
+ would be a compile-time error. We like it when these are the problem because not only are they easy
+ to see, but depending on the IDE (Integrated Development Environment) that you're using, you will
+ even be given suggestions on how to fix the error, some of which can even be done automatically once
+ you indicate that that's what you want to do.
+
+
+LOGIC
+
+These are the nightmares of programmers. Logic errors are the ones that every programmer prays that
+ they don't have. Why? Because you won't see it coming. Logic errors, a.k.a. run-time errors, as the
+ name suggests, are only caught at run-time. They are not something that your compiler will catch for
+ you. Your program will be working just fine, and then all of a sudden something will happen and the
+ whole thing will just stop working. This is usually do to a logic error.
+
+There are ways to prevent logic errors, but none of them are fool-proof or catch-all. And none of them
+ are all that simple to do. The two biggest things that you can do to prevent logic errors are:
+
+ 1) Design your system well - some things can be caught in the design phase because you will be able
+                                to see that it doesn't work the way that you were thinking based on
+                                how things are supposed to work together
+
+ 2) Test any and all code that you write as much as you can - I will go over this in the next section
+
+
+/* --------------------------------------------------------------------------------------------- */
+
+
+Testing:
+
+There are 3 major types of tests that are generally categorized based on the amount of code involved
+ in the testing. The 3 types are as follows:
+
+ 1) Unit (smallest)
+
+ 2) Integration
+
+ 3) UI (largest)
+
+Unit tests are tests that only deal with one particular thing, like a class or even just a specific
+ function. They are meant to test the corner cases for the class/function. A corner case is basically
+ something that may or may not be likely to happen, but if it did happen then it could potentially
+ break the whole program. For example, what if I needed the user to provide some input for a function
+ that I wanted to use. I would want to test using that function with multiple cases of user input to
+ make sure that the function would properly do what I intend. Often times, it is a good idea to limit
+ the amount or type of user input to ensure that it will work as intended.
+
+Integration testing is a bit more in-depth. Integration testing involves testing how multiple classes
+ will work together and communicate. If you're programming on a system, these tests can also be done
+ on the system to make sure that things will work on the system as expected. However, these tests are
+ still relatively small. They aren't meant to do a bunch of different things. They're only for
+ checking minimal usage on the system.
+
+UI tests are the largest tests. These tests are designed to see how the overall system will work.
+ These are the kinds of tests that would be tested by an actual user to make sure that everything
+ works according to the user's input and direction.
+
+
+In general, because unit tests are rather small comparatively, there should be a lot of them. If we
+ can verify that the functionality of a class is good, then we know that an error in the system
+ wouldn't be caused by that class. On the flip side, because UI tests attempt to test the system as
+ a whole, there are usually only a few of them because they are extremely difficult to write and are
+ rather big.
+
+
+/* --------------------------------------------------------------------------------------------- */
 
 I hope this guide was helpful :)

@@ -64,6 +64,8 @@ public class HardwareNut {
     /* Define Servo references ------------------------------------------------------------------*/
     private Servo    leftClaw    = null;
     private Servo    rightClaw   = null;
+    private Servo    topLeftClaw   = null;
+    private Servo    topRightClaw   = null;
     private Servo    idolHand    = null;
 
     /* Define global constants ------------------------------------------------------------------*/
@@ -77,7 +79,7 @@ public class HardwareNut {
     public static final double CLAW_MAX_RANGE       =   1.3;
     public static final double CLAW_HOME            =   0.08;
     public static final double CLAW_SPEED           =   0.05;
-    public static final double MID_SERVO            =   0.0;
+    public static final double MID_SERVO            =   0.0;    //TODO - Determine if we still want to use this as it isn't in our range
 
     /* Idol Hand Constants */
     public static final double IDOLHAND_MIN_RANGE   =   0.05;
@@ -130,6 +132,14 @@ public class HardwareNut {
         return leftClaw;
     }
 
+    public Servo gettopLeftClaw() {
+        return topLeftClaw;
+    }
+
+    public Servo gettopRightClaw() {
+        return topRightClaw;
+    }
+
     public Servo getRightClaw() {
         return rightClaw;
     }
@@ -139,7 +149,7 @@ public class HardwareNut {
     }
 
     public double[] getClawPositions() {
-        return new double[]{leftClaw.getPosition(), rightClaw.getPosition()};
+        return new double[]{leftClaw.getPosition(), rightClaw.getPosition(), topLeftClaw.getPosition(), topRightClaw.getPosition()};
     }
 
     public double getIdolHandPosition() {
@@ -147,6 +157,7 @@ public class HardwareNut {
     }
 
     /* Functional methods -----------------------------------------------------------------------*/
+
     /**
      * Initialize all standard hardware interfaces
      *
@@ -217,12 +228,19 @@ public class HardwareNut {
 
 
         /* INITIALIZE SERVOS --------------------------------------------------------------------*/
+        topRightClaw  = hwMap.get(Servo.class, "top_right_claw");
         rightClaw  = hwMap.get(Servo.class, "right_claw");
         leftClaw = hwMap.get(Servo.class, "left_claw");
+        topLeftClaw  = hwMap.get(Servo.class, "top_left_claw");
+
+
         idolHand = hwMap.get(Servo.class, "idol_hand");
 
         rightClaw.setPosition(CLAW_MIN_RANGE);
         leftClaw.setPosition(CLAW_MAX_RANGE);
+        topRightClaw.setPosition(CLAW_MIN_RANGE);
+        topLeftClaw.setPosition(CLAW_MIN_RANGE);
+
     }
 }
 

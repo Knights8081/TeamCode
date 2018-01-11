@@ -57,6 +57,7 @@ public class HardwarePushBot
     private DcMotor  rightDrive  = null;
     private DcMotor  leftArm     = null;
     private DcMotor  rightArm    = null;
+    private DcMotor  liftArm     = null;
 
     private Servo    leftClaw    = null;
     private Servo    rightClaw   = null;

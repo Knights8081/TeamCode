@@ -105,8 +105,12 @@ public class MechanumWheels extends OpMode {
         else if (gamepad2.b)
             MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
 
+
+        robot.gettopLeftClaw().setPosition(clawPositions[0]);
         robot.getLeftClaw().setPosition(clawPositions[0]);
         robot.getRightClaw().setPosition(clawPositions[1]);
+        robot.gettopRightClaw().setPosition(clawPositions[1]);
+
 
 //        if (gamepad2.a)
 //            handPosition += Idol_SPEED;
@@ -118,7 +122,7 @@ public class MechanumWheels extends OpMode {
 //        robot.getIdolHand().setPosition(handPosition);
 
         /* SET ARM POWER ------------------------------------------------------------------------*/
-        robot.getLiftArm().setPower(left2);
+        robot.getLiftArm().setPower(- left2);
 
 
         /* CHECK FOR IDOL SLIDE UPDATE ----------------------------------------------------------*/

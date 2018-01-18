@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.teamCode;
+package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
 
@@ -12,11 +13,12 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
  *
  * @author Anna Field
  */
-@TeleOp(name="Nut: MechanumWheels", group="Nut")
-public class MechanumWheels extends OpMode {
+@TeleOp(name="Nut: MechanumWheelsOnePad", group="Nut")
+public class MechanumWheelsOnePad extends OpMode {
 
     private final HardwareNut robot = new HardwareNut();        //reference for robot hardware
     private double[] clawPositions;                             //handles updating positions for the claw
+    private double[] handPositions;
 
     /* Game pad controller reference declarations */
     private double left;
@@ -27,6 +29,14 @@ public class MechanumWheels extends OpMode {
     private double LT;
     private double RT2;
     private double LT2;
+
+
+    public static final double IDOLHAND_MIN_RANGE   =   0.05;
+    public static final double IDOLHAND_MAX_RANGE   =   1.3;
+    public static final double IDOLHAND_HOME        =   0.08;
+    public static final double IDOL_SPEED           =   0.05;
+
+
 
     /**
      * Code to run ONCE when the driver hits INIT
@@ -64,8 +74,8 @@ public class MechanumWheels extends OpMode {
         /* SET REFERENCES -----------------------------------------------------------------------*/
         left = gamepad1.left_stick_y;
         right = gamepad1.right_stick_y;
-        left2 = gamepad2.left_stick_y;
-        right2 = gamepad2.right_stick_y;
+//        left2 = gamepad1.left_stick_y;
+//        right2 = gamepad2.right_stick_y;
         RT = gamepad1.right_trigger;
         LT = gamepad1.left_trigger;
         RT2 = gamepad2.right_trigger;
@@ -78,24 +88,38 @@ public class MechanumWheels extends OpMode {
         robot.getLeftArm().setPower(left);
         robot.getRightArm().setPower(right);
 
+        /*
+                //robot.getGlyph().setPower(right2);
+                 */
 
-//        robot.getGlyph().setPower(right2);
-
-        while (gamepad2.dpad_right){
+        while (gamepad1.dpad_right){
             robot.getIdolLift().setPower(.5);}
-        if (gamepad2.dpad_up){
+        if (gamepad1.dpad_up){
             robot.getIdolLift().setPower(0);}
-        while (gamepad2.dpad_left){
+        while (gamepad1.dpad_left){
             robot.getIdolLift().setPower(-.5);}
 
         /* CHECK FOR CLAW UPDATE ----------------------------------------------------------------*/
         clawPositions = robot.getClawPositions();
+        handPositions = robot.getIdolHandPosition();
 
-        if (gamepad2.b)
+        if (gamepad1.b)
             MoveClaw.closeClaw(clawPositions, HardwareNut.CLAW_SPEED);
-        else if (gamepad2.x)
+        else if (gamepad1.x)
             MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
 
+        if (gamepad1.y) {
+            robot.getLiftArm().setPower(.75);
+        }
+        else if (gamepad1.a) {
+            robot.getLiftArm().setPower(-.75);
+        }
+        else
+            robot.getLiftArm().setPower(0);
+
+
+
+        robot.getIdolHand().setPosition(handPositions[0]);
 
         robot.gettopLeftClaw().setPosition(clawPositions[0]);
         robot.getLeftClaw().setPosition(clawPositions[0]);
@@ -103,17 +127,17 @@ public class MechanumWheels extends OpMode {
         robot.gettopRightClaw().setPosition(clawPositions[1]);
 
 
-//        if (gamepad2.a)
-//           handPosition += Idol_SPEED;
-//        else if (gamepad2.y)
-//           handPosition -= Idol_SPEED;
-
+//        if (gamepad1.right_bumper)
+//            robot.getIdolHand().setPosition(.9);
+//        else if (gamepad1.left_bumper)
+//            robot.getIdolHand().setPosition(.2);
 
 //        handPosition  = Range.clip(handPosition, HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
 //        robot.getIdolHand().setPosition(handPosition);
 
+
         /* SET ARM POWER ------------------------------------------------------------------------*/
-        robot.getLiftArm().setPower(- left2);
+//        robot.getLiftArm().setPower(- left2);
 
 
         /* CHECK FOR IDOL SLIDE UPDATE ----------------------------------------------------------*/

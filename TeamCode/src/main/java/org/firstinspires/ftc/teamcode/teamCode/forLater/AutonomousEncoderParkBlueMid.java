@@ -80,6 +80,11 @@ public class AutonomousEncoderParkBlueMid extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
+
+
+
+
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
@@ -106,7 +111,7 @@ public class AutonomousEncoderParkBlueMid extends LinearOpMode {
         DistanceSensor sensorDistance;
 
 
-        robot.init(hardwareMap);
+
 
 
         // get a reference to the color sensor.

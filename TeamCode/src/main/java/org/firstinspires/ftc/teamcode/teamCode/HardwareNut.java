@@ -67,6 +67,7 @@ public class HardwareNut {
     private Servo    topLeftClaw   = null;
     private Servo    topRightClaw   = null;
     private Servo    idolHand    = null;
+    private Servo    ballarm    = null;
 
     /* Define global constants ------------------------------------------------------------------*/
 
@@ -148,12 +149,16 @@ public class HardwareNut {
         return idolHand;
     }
 
+    public Servo getBallarm() {
+        return ballarm;
+    }
+
     public double[] getClawPositions() {
         return new double[]{leftClaw.getPosition(), rightClaw.getPosition(), topLeftClaw.getPosition(), topRightClaw.getPosition()};
     }
 
-    public double getIdolHandPosition() {
-        return idolHand.getPosition();
+    public double[] getIdolHandPosition() {
+        return new double[]{idolHand.getPosition()};
     }
 
     /* Functional methods -----------------------------------------------------------------------*/
@@ -235,6 +240,7 @@ public class HardwareNut {
 
 
         idolHand = hwMap.get(Servo.class, "idol_hand");
+        ballarm = hwMap.get(Servo.class, "ball_arm");
 
         rightClaw.setPosition(CLAW_MIN_RANGE);
         leftClaw.setPosition(CLAW_MAX_RANGE);

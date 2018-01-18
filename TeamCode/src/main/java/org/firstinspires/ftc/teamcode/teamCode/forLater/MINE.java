@@ -1,10 +1,11 @@
-package org.firstinspires.ftc.teamcode.teamCode;
+package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
+import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveHand;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
 
 /**
@@ -12,8 +13,8 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
  *
  * @author Anna Field
  */
-@TeleOp(name="Nut: MechanumWheels", group="Nut")
-public class MechanumWheels extends OpMode {
+@TeleOp(name="Nut: MINE", group="Nut")
+public class MINE extends OpMode {
 
     private final HardwareNut robot = new HardwareNut();        //reference for robot hardware
     private double[] clawPositions;                             //handles updating positions for the claw
@@ -103,10 +104,10 @@ public class MechanumWheels extends OpMode {
         robot.gettopRightClaw().setPosition(clawPositions[1]);
 
 
-//        if (gamepad2.a)
-//           handPosition += Idol_SPEED;
-//        else if (gamepad2.y)
-//           handPosition -= Idol_SPEED;
+        if (gamepad2.a)
+            MoveHand.closeHand(clawPositions, HardwareNut.CLAW_SPEED);
+        else if (gamepad2.y)
+            MoveHand.openHand(clawPositions, HardwareNut.CLAW_SPEED);
 
 
 //        handPosition  = Range.clip(handPosition, HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);

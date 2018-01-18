@@ -145,7 +145,7 @@ public class MechanumWheelsOnePad extends OpMode {
             robot.getIdolSlide().setPower(.5*RT2);
         else if (LT2 > 0.1)
             robot.getIdolSlide().setPower(-.5*LT2);
-
+//
 
         /* CHECK FOR STRAFING -------------------------------------------------------------------*/
         if (RT > 0.1)

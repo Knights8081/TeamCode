@@ -20,7 +20,7 @@ import java.util.Locale;
  * Created by afield on 9/27/2017.
  */
 @Autonomous (name="Sensor Test", group="Test")
-@Disabled
+//@Disabled
 public class AutonomousSensorTest extends LinearOpMode {
     HardwareNut robot = new HardwareNut();
     SensorREVColorDistance hwSensor = new SensorREVColorDistance();

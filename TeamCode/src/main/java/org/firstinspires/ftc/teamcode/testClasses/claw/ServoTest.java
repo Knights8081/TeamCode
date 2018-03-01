@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.testClasses.claw;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
  * @author Luke Frazer
  */
 @TeleOp(name="Nut: Servo test 1", group="Nut")
+@Disabled
 public class ServoTest extends OpMode {
 
     private final HardwareNut robot = new HardwareNut();    //reference for robot hardware

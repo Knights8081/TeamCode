@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,6 +26,7 @@ import java.util.Locale;
  * Created by lfrazer on 1/11/18.
  */
 @Autonomous(name="Vuforia auto drive TEST", group="PushBot")
+@Disabled
 public class Vumark_Encoder_AND_Sensor extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -63,7 +65,19 @@ public class Vumark_Encoder_AND_Sensor extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
-        // Send telemetry message to signify robot waiting;
+
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
+        sensorColor.enableLed(true);
+
+
+
+
+
+        // Send telemetry message to signify
+        //robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
@@ -108,8 +122,8 @@ public class Vumark_Encoder_AND_Sensor extends LinearOpMode {
             // NOTE: Reverse movement is obtained by setting a negative distance (not speed)
 
 
-        robot.getLeftClaw().setPosition(HardwareNut.CLAW_MIN_RANGE);            // S4: Stop and close the claw.
-        robot.getRightClaw().setPosition(HardwareNut.CLAW_MAX_RANGE);
+//        robot.getLeftClaw().setPosition(HardwareNut.CLAW_MIN_RANGE);            // S4: Stop and close the claw.
+//        robot.getRightClaw().setPosition(HardwareNut.CLAW_MAX_RANGE);
 
         sleep(1500);
         robot.getLiftArm().setPower(.25);
@@ -178,6 +192,8 @@ public class Vumark_Encoder_AND_Sensor extends LinearOpMode {
 
 
             }
+
+
 
 
 //        robot.getLeftClaw().setPosition(HardwareNut.CLAW_MAX_RANGE);            // S4: Stop and close the claw.
@@ -252,6 +268,10 @@ public class Vumark_Encoder_AND_Sensor extends LinearOpMode {
         }
     }
 
+
+
+
+
     /**
      * Check if all motors are busy
      *
@@ -312,32 +332,35 @@ public class Vumark_Encoder_AND_Sensor extends LinearOpMode {
         robot.getRightArm().setPower(power);
     }
 
-    public void jewel (double holdTime) {
-    ElapsedTime holdTimer = new ElapsedTime();
-    holdTimer.reset();
-    while (opModeIsActive() && holdTimer.time() < holdTime)
-        if (sensorColor.blue() > 3) {
+    public void jewel ( double holdTime){
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
+        while (opModeIsActive() && holdTimer.time() < holdTime)
+            if (sensorColor.blue() > 3) {
 
-            robot.getBallarm().setPosition(1.0);
-            encoderDrive(TURN_SPEED, -2, 2, 2);
-            encoderDrive(TURN_SPEED, 2, -2, 2);
-            robot.getBallarm().setPosition(0.0);
 
-        } else {
-            encoderDrive(TURN_SPEED, 2, -2, 2);
-            encoderDrive(TURN_SPEED, -2, 2, 2);
-            robot.getBallarm().setPosition(0.0);
-        }
+                encoderDrive(TURN_SPEED, -2, 2, 2);
+                encoderDrive(TURN_SPEED, 2, -2, 2);
+                //robot.getBallarm().setPosition(0.0);
+
+            } else {
+                encoderDrive(TURN_SPEED, 2, -2, 2);
+                encoderDrive(TURN_SPEED, -2, 2, 2);
+               // robot.getBallarm().setPosition(0.0);
+            }
     }
 
-        public void armDown(double holdTime){
-            ElapsedTime holdTimer = new ElapsedTime();
-            holdTimer.reset();
-            while (opModeIsActive() && holdTimer.time() < holdTime)
-        robot.getBallarm().setPosition(1.0);
-        }
-
+    public void armDown(double holdTime) {
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
+        //while (opModeIsActive() && holdTimer.time() < holdTime)
+            //robot.getBallarm().setPosition(-1.3);
     }
+
+
+
+
+}
 
 
 

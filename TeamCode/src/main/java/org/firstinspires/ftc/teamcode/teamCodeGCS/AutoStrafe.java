@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 public final class AutoStrafe {
 
     //TODO - Test for value to use for setting power
-    private static final float powerValue = 0.0f;
+    private static final float powerValue = 0.9f;
 
     /**
      * This method handles strafing left

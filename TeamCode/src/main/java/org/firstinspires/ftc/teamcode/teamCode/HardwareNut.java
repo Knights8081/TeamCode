@@ -30,8 +30,11 @@
 package org.firstinspires.ftc.teamcode.teamCode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import com.qualcomm.robotcore.hardware.CRServo;
 
 /**
  * This is NOT an opmode.
@@ -57,9 +60,12 @@ public class HardwareNut {
     private DcMotor  leftArm     = null;        // Back left wheel
     private DcMotor  rightArm    = null;        // Back right wheel
     private DcMotor  liftArm     = null;
-    private DcMotor  idolSlide   = null;
+//    private DcMotor  idolSlide   = null;
     private DcMotor  idolLift    = null;
     private DcMotor  glyph       = null;
+    private DcMotor  barm        = null;
+    private DcMotor    ballarm    = null;
+
 
     /* Define Servo references ------------------------------------------------------------------*/
     private Servo    leftClaw    = null;
@@ -67,7 +73,9 @@ public class HardwareNut {
     private Servo    topLeftClaw   = null;
     private Servo    topRightClaw   = null;
     private Servo    idolHand    = null;
-    private Servo    ballarm    = null;
+    private Servo    idolDead   = null;
+
+
 
     /* Define global constants ------------------------------------------------------------------*/
 
@@ -116,9 +124,9 @@ public class HardwareNut {
         return liftArm;
     }
 
-    public DcMotor getIdolSlide() {
-        return idolSlide;
-    }
+//    public DcMotor getIdolSlide() {
+//        return idolSlide;
+//    }
 
     public DcMotor getIdolLift() {
         return idolLift;
@@ -128,6 +136,11 @@ public class HardwareNut {
         return glyph;
     }
 
+    public DcMotor getBarm() { return barm; }
+
+    public DcMotor getBallarm() {
+        return ballarm;
+    }
     /* Servo getters ----------------------------------------------------------------------------*/
     public Servo getLeftClaw() {
         return leftClaw;
@@ -149,16 +162,19 @@ public class HardwareNut {
         return idolHand;
     }
 
-    public Servo getBallarm() {
-        return ballarm;
-    }
+    public Servo getIdolDead() { return idolDead;}
+
+
+
+
 
     public double[] getClawPositions() {
         return new double[]{leftClaw.getPosition(), rightClaw.getPosition(), topLeftClaw.getPosition(), topRightClaw.getPosition()};
     }
 
     public double[] getIdolHandPosition() {
-        return new double[]{idolHand.getPosition()};
+
+       return new double[]{idolHand.getPosition(), idolDead.getPosition()};
     }
 
     /* Functional methods -----------------------------------------------------------------------*/
@@ -186,12 +202,15 @@ public class HardwareNut {
 
         /* Arm Motors */
         liftArm = hwMap.get(DcMotor.class, "lift_arm");
-        idolSlide = hwMap.get(DcMotor.class, "idol_slide");
+//        idolSlide = hwMap.get(DcMotor.class, "idol_slide");
         glyph = hwMap.get(DcMotor.class, "glyph_hand");
         idolLift = hwMap.get(DcMotor.class, "idol_lift");
+        ballarm = hwMap.get(DcMotor.class, "ball_arm");
 
-        idolSlide.setDirection(DcMotor.Direction.FORWARD);
+//        idolSlide.setDirection(DcMotor.Direction.FORWARD);
         glyph.setDirection(DcMotor.Direction.FORWARD);
+//        barm.setDirection(DcMotor.Direction.FORWARD);
+//        ballarm.setDirection(DcMotor.Direction.FORWARD);
 
 //        TODO - Why are these here? Are we using them anywhere but here?
 //        DcMotor FR = hwMap.get(DcMotor.class, "right_drive");
@@ -205,14 +224,16 @@ public class HardwareNut {
         /* SET INITIAL POWER --------------------------------------------------------------------*/
         leftDrive.setPower(0);
         rightDrive.setPower(0);
+
         leftArm.setPower(0);
         rightArm.setPower(0);
         liftArm.setPower(0);
+        ballarm.setPower(0);
 //        FR.setPower(0);
 //        FL.setPower(0);
 //        BR.setPower(0);
 //        BL.setPower(0);
-        idolSlide.setPower(0);
+//        idolSlide.setPower(0);
         idolLift.setPower(0);
         glyph.setPower(0);
 
@@ -227,9 +248,11 @@ public class HardwareNut {
 //        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        idolSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        idolSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         idolLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         glyph.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ballarm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
 
         /* INITIALIZE SERVOS --------------------------------------------------------------------*/
@@ -240,12 +263,16 @@ public class HardwareNut {
 
 
         idolHand = hwMap.get(Servo.class, "idol_hand");
-        ballarm = hwMap.get(Servo.class, "ball_arm");
+        idolDead = hwMap.get(Servo.class, "idol_dead");
+
 
         rightClaw.setPosition(CLAW_MIN_RANGE);
         leftClaw.setPosition(CLAW_MAX_RANGE);
         topRightClaw.setPosition(CLAW_MIN_RANGE);
         topLeftClaw.setPosition(CLAW_MIN_RANGE);
+
+        idolHand.setPosition(IDOLHAND_MIN_RANGE);
+        idolDead.setPosition(IDOLHAND_MIN_RANGE);
 
     }
 }

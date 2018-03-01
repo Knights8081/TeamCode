@@ -18,17 +18,17 @@ public final class MoveHand {
      *  positions[0] -> left claw position
      *  positions[1] -> right claw position
      *
-     * @param positions - array holding the positions for the hands for the claw
-     * @param speed - speed at which the claw will change positions
+     * @param handpositions - array holding the positions for the hands for the claw
+     * @param speedhand - speed at which the claw will change positions
      */
-    public static void openHand(final double[] positions, final double speed) {
+    public static void openHand(final double[] handpositions, final double speedhand) {
         /* Update positions */
-        positions[0] += speed;
-        positions[1] -= speed;
+        handpositions[0] += speedhand;
+        handpositions[1] -= speedhand;
 
         /* Clip the positions to make sure they are within the valid range for the servos */
-        positions[0]  = Range.clip(positions[0], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
-        positions[1] = Range.clip(positions[1], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
+        handpositions[0]  = Range.clip(handpositions[0], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
+        handpositions[1] = Range.clip(handpositions[1], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
     }
 
     /**
@@ -38,16 +38,16 @@ public final class MoveHand {
      *  positions[0] -> left claw position
      *  positions[1] -> right claw position
      *
-     * @param positions - array holding the positions for the hands for the claw
-     * @param speed - speed at which the claw will change positions
+     * @param handpositions - array holding the positions for the hands for the claw
+     * @param speedhand - speed at which the claw will change positions
      */
-    public static void closeHand(final double[] positions, final double speed) {
+    public static void closeHand(final double[] handpositions, final double speedhand) {
         /* Update positions */
-        positions[0] -= speed;
-        positions[1] += speed;
+        handpositions[0] -= speedhand;
+        handpositions[1] += speedhand;
 
         /* Clip the positions to make sure they are within the valid range for the servos */
-        positions[0]  = Range.clip(positions[0], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
-        positions[1] = Range.clip(positions[1], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
+        handpositions[0]  = Range.clip(handpositions[0], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
+        handpositions[1] = Range.clip(handpositions[1], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
     }
 }

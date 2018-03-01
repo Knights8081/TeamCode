@@ -80,13 +80,26 @@ public class MechanumWheels extends OpMode {
 
 
 //        robot.getGlyph().setPower(right2);
+//
+//        if (gamepad2.dpad_right){
+//            robot.getIdolSlide().setPower(.8);
+//        }
+//        else if (gamepad2.dpad_left){
+//            robot.getIdolSlide().setPower(-.8);
+//        }
+//        else{
+//            robot.getIdolSlide().setPower(0);
+//        }
 
-        while (gamepad2.dpad_right){
-            robot.getIdolLift().setPower(.5);}
-        if (gamepad2.dpad_up){
-            robot.getIdolLift().setPower(0);}
-        while (gamepad2.dpad_left){
-            robot.getIdolLift().setPower(-.5);}
+
+//
+//        if (gamepad1.dpad_left){
+//            robot.getBallarm().setPosition(1.0);
+//            }
+//        else if (gamepad1.dpad_right){
+//            robot.getBallarm().setPosition(0.0);
+//            }
+
 
         /* CHECK FOR CLAW UPDATE ----------------------------------------------------------------*/
         clawPositions = robot.getClawPositions();
@@ -95,6 +108,13 @@ public class MechanumWheels extends OpMode {
             MoveClaw.closeClaw(clawPositions, HardwareNut.CLAW_SPEED);
         else if (gamepad2.x)
             MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
+
+
+        if (gamepad2.left_bumper)
+            robot.getIdolDead().setPosition(.5);
+        else if (gamepad2.right_bumper)
+            robot.getIdolDead().setPosition(-.5);
+
 
 
         robot.gettopLeftClaw().setPosition(clawPositions[0]);
@@ -118,9 +138,9 @@ public class MechanumWheels extends OpMode {
 
         /* CHECK FOR IDOL SLIDE UPDATE ----------------------------------------------------------*/
         if (RT2 > 0.1)
-            robot.getIdolSlide().setPower(.5*RT2);
+            robot.getIdolLift().setPower(.5*RT2);
         else if (LT2 > 0.1)
-            robot.getIdolSlide().setPower(-.5*LT2);
+            robot.getIdolLift().setPower(-.5*LT2);
 
 
         /* CHECK FOR STRAFING -------------------------------------------------------------------*/

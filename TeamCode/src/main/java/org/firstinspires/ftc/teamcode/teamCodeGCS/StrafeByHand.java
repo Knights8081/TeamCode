@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 public final class StrafeByHand {
 
     //We want to use 75% of the trigger's value when setting power
-    private static final float percentage = 0.85f;
+    private static final float percentage = 0.90f;
 
     /**
      * This method handles strafing left

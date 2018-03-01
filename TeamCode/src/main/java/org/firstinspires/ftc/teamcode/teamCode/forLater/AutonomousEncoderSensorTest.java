@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 
 @Autonomous (name = "Sensor: sensor and Encoder", group = "Sensor")
-@Disabled
+//@Disabled
 
 public class AutonomousEncoderSensorTest extends LinearOpMode {
 

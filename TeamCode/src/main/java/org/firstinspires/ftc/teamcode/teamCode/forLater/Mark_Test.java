@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveClaw;
-import org.firstinspires.ftc.teamcode.teamCodeGCS.MoveHand;
 import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
 
 /**
@@ -14,12 +12,14 @@ import org.firstinspires.ftc.teamcode.teamCodeGCS.StrafeByHand;
  *
  * @author Anna Field
  */
-@TeleOp(name="Nut: MINE", group="Nut")
-@Disabled
-public class MINE extends OpMode {
+@TeleOp(name="Nut: Mark_TEST", group="Nut")
+public class Mark_Test extends OpMode {
 
     private final HardwareNut robot = new HardwareNut();        //reference for robot hardware
     private double[] clawPositions;                             //handles updating positions for the claw
+    private double[] handPositions;
+
+
 
     /* Game pad controller reference declarations */
     private double left;
@@ -31,15 +31,37 @@ public class MINE extends OpMode {
     private double RT2;
     private double LT2;
 
+    final double DEAD_HOME = .2;
+
+    double          deadPosition     = DEAD_HOME;
+
+
+
+    public static final double IDOLHAND_MIN_RANGE   =   0.05;
+    public static final double IDOLHAND_MAX_RANGE   =   1.3;
+    public static final double IDOLHAND_HOME        =   0.08;
+    public static final double IDOL_SPEED           =   0.05;
+
+//    DigitalChannel digitalTouch;
+
     /**
      * Code to run ONCE when the driver hits INIT
      */
+
+
+
+
+
     @Override
     public void init() {
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+//        digitalTouch.setMode(DigitalChannel.Mode.INPUT);
+
+
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -62,13 +84,19 @@ public class MINE extends OpMode {
 
     @Override
     public void loop() {
+
+
+
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
+
+
+
 
         /* SET REFERENCES -----------------------------------------------------------------------*/
         left = gamepad1.left_stick_y;
         right = gamepad1.right_stick_y;
-        left2 = gamepad2.left_stick_y;
-        right2 = gamepad2.right_stick_y;
+//        left2 = gamepad1.left_stick_y;
+//        right2 = gamepad2.right_stick_y;
         RT = gamepad1.right_trigger;
         LT = gamepad1.left_trigger;
         RT2 = gamepad2.right_trigger;
@@ -81,24 +109,74 @@ public class MINE extends OpMode {
         robot.getLeftArm().setPower(left);
         robot.getRightArm().setPower(right);
 
+        /* SET CRSERVO   ----------------------------------------------------------------         */
+//        robot.getBarm().
 
-//        robot.getGlyph().setPower(right2);
 
-        if (gamepad2.dpad_right){
-            robot.getIdolLift().setPower(.5);}
-        else if (gamepad2.dpad_up){
-            robot.getIdolLift().setPower(0);}
-        else if (gamepad2.dpad_left){
-            robot.getIdolLift().setPower(-.5);}
+
+
+
+        //TODO: MARK FIX THIS
+//                if (gamepad1.a)
+//                armPosition += ARM_SPEED;
+//            else if (gamepad1.y)
+//                armPosition -= ARM_SPEED;
+//
+//
+//        armPosition  = Range.clip(armPosition, robot.ARM_MIN_RANGE, robot.ARM_MAX_RANGE);
+//        robot.arm.setPosition(armPosition);
+
+
+
+
+
+
+//
+//        if (gamepad1.dpad_right){
+//            robot.getIdolSlide().setPower(.8);
+//        }
+//        else if (gamepad1.dpad_left){
+//            robot.getIdolSlide().setPower(-.8);
+//        }
+//        else{
+//            robot.getIdolSlide().setPower(0);
+//        }
 
         /* CHECK FOR CLAW UPDATE ----------------------------------------------------------------*/
         clawPositions = robot.getClawPositions();
+        handPositions = robot.getIdolHandPosition();
 
-        if (gamepad2.b)
+        if (gamepad1.b)
             MoveClaw.closeClaw(clawPositions, HardwareNut.CLAW_SPEED);
-        else if (gamepad2.x)
+        else if (gamepad1.x)
             MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
 
+        if (gamepad1.right_bumper){
+            robot.getIdolHand().setPosition(1.0);
+        }
+        else if (gamepad1.left_bumper){
+            robot.getIdolHand().setPosition(0.0);
+        }
+
+
+//
+//        if (gamepad1.b)
+//            MoveClaw.(handPositions, HardwareNut.CLAW_SPEED);
+//        else if (gamepad1.x)
+//            MoveClaw.openClaw(handPositions, HardwareNut.CLAW_SPEED);
+
+        if (gamepad1.y) {
+            robot.getIdolLift().setPower(-.6);
+        }
+        else if (gamepad1.a) {
+            robot.getIdolLift().setPower(.75);
+        }
+        else
+            robot.getIdolLift().setPower(0);
+
+
+
+//        robot.getIdolHand().setPosition(handPositions[0]);
 
         robot.gettopLeftClaw().setPosition(clawPositions[0]);
         robot.getLeftClaw().setPosition(clawPositions[0]);
@@ -106,30 +184,45 @@ public class MINE extends OpMode {
         robot.gettopRightClaw().setPosition(clawPositions[1]);
 
 
-        if (gamepad2.a)
-            MoveHand.closeHand(clawPositions, HardwareNut.CLAW_SPEED);
-        else if (gamepad2.y)
-            MoveHand.openHand(clawPositions, HardwareNut.CLAW_SPEED);
-
+//        if (gamepad1.right_bumper)
+//            robot.getIdolHand().setPosition(.9);
+//        else if (gamepad1.left_bumper)
+//            robot.getIdolHand().setPosition(.2);
 
 //        handPosition  = Range.clip(handPosition, HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
 //        robot.getIdolHand().setPosition(handPosition);
 
+
         /* SET ARM POWER ------------------------------------------------------------------------*/
-        robot.getLiftArm().setPower(- left2);
+       robot.getLiftArm().setPower(.1*-left2);
 
 
         /* CHECK FOR IDOL SLIDE UPDATE ----------------------------------------------------------*/
-//        if (RT2 > 0.1)
-//            robot.getIdolSlide().setPower(.5*RT2);
-//        else if (LT2 > 0.1)
-//            robot.getIdolSlide().setPower(-.5*LT2);
+        if (gamepad1.dpad_up) {
+            robot.getLiftArm().setPower(-.90);
+        }
+        else if (gamepad1.dpad_down) {
+            robot.getLiftArm().setPower(.55);
+
+        }
+        else {
+            robot.getLiftArm().setPower(0.0);
+        }
 
 
         /* CHECK FOR STRAFING -------------------------------------------------------------------*/
-        if (RT > 0.1)
-            StrafeByHand.right(robot, RT);
-        else if (LT > 0.1)
-            StrafeByHand.left(robot, LT);
-    }
+            if (RT >= 0.1) {
+                StrafeByHand.right(robot, RT);
+            } else if (LT >= 0.1) {
+                StrafeByHand.left(robot, LT);
+            }
+
+
+//    if (gamepad1.right_bumper && !digitalTouch.getState() == false) {
+//        robot.getIdolLift().setPower(0.0);
+//    }
+
+}
+
+
 }

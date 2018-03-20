@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.teamCode.forLater;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
@@ -45,7 +46,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
  */
 @Autonomous(name = "Sensor: Digital touch", group = "Sensor")
-
+@Disabled
 public class SensorDigitalTouch extends LinearOpMode {
     /**
      * The REV Robotics Touch Sensor

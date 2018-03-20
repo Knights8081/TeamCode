@@ -18,19 +18,21 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  */
 public final class Move {
 
+    /* SPEED VALUES ------------------------------------------------*/
     private static final float POWERVALUE = 0.75f;
     private static final float STRAFEVALUE = 0.6f;
-
-    //Value to set the power to 0 to stop the motor
     private static final float STOPVALUE = 0.0f;
 
-    private static final long SHORTWAIT = 300;      //300ms pause
+    /* TIME VALUES -------------------------------------------------*/
+    private static final long SHORTWAIT = 250;      //250ms pause
     private static final long LONGWAIT = 425;       //425ms pause
+
+    private static HardwareNut robot;       //instance of the robot to test
 
     /**
      * Move the robot forward
      */
-    private static void forward(final HardwareNut robot) {
+    private static void forward() {
         robot.getRightDrive().setPower(-POWERVALUE);
         robot.getLeftDrive().setPower(-POWERVALUE);
         robot.getRightArm().setPower(-POWERVALUE);
@@ -40,7 +42,7 @@ public final class Move {
     /**
      * Move the robot backward
      */
-    private static void backward(final HardwareNut robot) {
+    private static void backward() {
         robot.getRightDrive().setPower(POWERVALUE);
         robot.getLeftDrive().setPower(POWERVALUE);
         robot.getRightArm().setPower(POWERVALUE);
@@ -50,7 +52,7 @@ public final class Move {
     /**
      * Turn the robot to the left
      */
-    private static void turnLeft(final HardwareNut robot) {
+    private static void turnLeft() {
         robot.getRightDrive().setPower(-POWERVALUE);
         robot.getLeftDrive().setPower(POWERVALUE);
         robot.getRightArm().setPower(-POWERVALUE);
@@ -60,7 +62,7 @@ public final class Move {
     /**
      * Turn the robot to the right
      */
-    private static void turnRight(final HardwareNut robot) {
+    private static void turnRight() {
         robot.getRightDrive().setPower(POWERVALUE);
         robot.getLeftDrive().setPower(-POWERVALUE);
         robot.getRightArm().setPower(POWERVALUE);
@@ -70,7 +72,7 @@ public final class Move {
     /**
      * Strafe the robot to the left
      */
-    private static void strafeLeft(final HardwareNut robot) {
+    private static void strafeLeft() {
         robot.getRightDrive().setPower(-STRAFEVALUE);
         robot.getLeftDrive().setPower(STRAFEVALUE);
         robot.getRightArm().setPower(STRAFEVALUE);
@@ -80,7 +82,7 @@ public final class Move {
     /**
      * Strafe the robot to the right
      */
-    private static void strafeRight(final HardwareNut robot) {
+    private static void strafeRight() {
         robot.getRightDrive().setPower(POWERVALUE);
         robot.getLeftDrive().setPower(-POWERVALUE);
         robot.getRightArm().setPower(-POWERVALUE);
@@ -90,7 +92,7 @@ public final class Move {
     /**
      * Stops the robot so that it is no longer moving or turning
      */
-    private static void stop(final HardwareNut robot) {
+    private static void stop() {
         robot.getRightDrive().setPower(STOPVALUE);
         robot.getLeftDrive().setPower(STOPVALUE);
         robot.getRightArm().setPower(STOPVALUE);
@@ -100,42 +102,43 @@ public final class Move {
     /**
      * Test function to run through all of the movement tests
      */
-    public static void runMovementTest(final HardwareNut robot) {
+    public static void runMovementTest(final HardwareNut r) {
+        robot = r;
 
-        forward(robot);
+        forward();
         SystemClock.sleep(SHORTWAIT);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(LONGWAIT);
 
-        backward(robot);
+        backward();
         SystemClock.sleep(SHORTWAIT);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(LONGWAIT);
 
-        turnLeft(robot);
+        turnLeft();
         SystemClock.sleep(SHORTWAIT);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(LONGWAIT);
 
-        turnRight(robot);
+        turnRight();
         SystemClock.sleep(SHORTWAIT);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(LONGWAIT);
 
-        strafeLeft(robot);
+        strafeLeft();
         SystemClock.sleep(SHORTWAIT);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(LONGWAIT);
 
-        strafeRight(robot);
+        strafeRight();
         SystemClock.sleep(SHORTWAIT);
 
-        stop(robot);
+        stop();
         SystemClock.sleep(LONGWAIT);
     }
 }

@@ -21,11 +21,15 @@ public final class StrafeByHand {
      */
     public static void left(final HardwareNut robot, final double trigger) {
 
+        /* OLD METHOD -----------------------------------------------------*/
         //Sequence: rD -, lD +, rA +, lA -
-        robot.getRightDrive().setPower(percentage * -trigger);
-        robot.getLeftDrive().setPower(percentage * trigger);
-        robot.getRightArm().setPower(percentage * trigger);
-        robot.getLeftArm().setPower(percentage * -trigger);
+//        robot.getRightDrive().setPower(percentage * -trigger);
+//        robot.getLeftDrive().setPower(percentage * trigger);
+//        robot.getRightArm().setPower(percentage * trigger);
+//        robot.getLeftArm().setPower(percentage * -trigger);
+
+        /* NEW METHOD -----------------------------------------------------*/
+
     }
 
     /**

@@ -1,3 +1,8 @@
+package org.firstinspires.ftc.teamcode.teamCode;
+
+/**
+ * Created by afield on 3/5/2018.
+ */
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -27,9 +32,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teamCode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.teamCode.forLater.SensorREVColorDistance;
+
+
+import android.app.Activity;
 import android.graphics.Color;
+import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -45,6 +67,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.teamCode.forLater.SensorREVColorDistance;
+
+import java.util.Locale;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -72,8 +96,8 @@ import org.firstinspires.ftc.teamcode.teamCode.forLater.SensorREVColorDistance;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="Vuforia auto drive RED SIDE", group="PushBot")
-public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
+@Autonomous(name="AUTO PHAT TEST RED BOTH", group="PushBot")
+public class Auto_Both extends LinearOpMode {
 
     /* Declare OpMode members. */
 
@@ -81,7 +105,7 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
     private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     private static final double     COUNTS_PER_MOTOR_REV    = 288 ;  // eg: TETRIX Motor Encoder
     private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * Math.PI);
+            (WHEEL_DIAMETER_INCHES * Math.PI);
     private static final double     DRIVE_SPEED             = 0.6;
     private static final double     TURN_SPEED              = 0.5;
 
@@ -89,7 +113,7 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
     OpenGLMatrix lastLocation = null;
-    private float hsvValues[] = {0F, 0F, 0F};
+
     HardwareNut robot = new HardwareNut();
 
     SensorREVColorDistance hwSensor = new SensorREVColorDistance();
@@ -101,15 +125,8 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-
-
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         *
-         */
-
         robot.init(hardwareMap);
+
 
         hwSensor.init();
 
@@ -120,161 +137,199 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
         sensorColor.enableLed(true);
 
 
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F, 0F, 0F};
 
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
-        telemetry.update();
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
 
-        //Reset encoders
-        turnOnStopAndReset();
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
 
-        //Turn on RUN_USING_ENCODER
-        turnOnRunUsingEncoder();
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
-                          robot.getLeftDrive().getCurrentPosition(),
-                          robot.getRightDrive().getCurrentPosition());
-        telemetry.update();
+        // wait for the start button to be pressed.
+        waitForStart();
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        // loop and read the RGB and distance data.
+        // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
+        while (opModeIsActive()) {
+            // convert the RGB values to HSV values.
+            // multiply by the SCALE_FACTOR.
+            // then cast it back to int (SCALE_FACTOR is a double)
+            Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                    (int) (sensorColor.green() * SCALE_FACTOR),
+                    (int) (sensorColor.blue() * SCALE_FACTOR),
+                    hsvValues);
 
-        parameters.vuforiaLicenseKey = "AXe+G0X/////AAAAGWX2PnVHaUK0lbybIB3Luad39Qzmm36RMGPUaiMP4ybPeYkYi7gHFkzHdn5vRGY+J7+0ZFIAVXqKf4PgJP8TpGTqnw8HM/aCP3BpmmYd5nmJxfwxQxzwydbjTovUJGcGqm+FBJVI93jCnHT68WPIv0Aki5yLpXXU6FwlYuzNMixa7FOTIdew60kBpM70uhIX8Y5yx+GKTB2WL3Sl0UKPE7jwWep0BsQe0gidcJdMXQAVU13jBrpXBKUSmKIuuQhWFUax9d/yaOns9mheTCH9S4RgQ96Ln4LwB0SzpIB2/rgQHkSgm7MWmCzsDn95/hRMYhSH82CevjgHqvTvRNIqwZ+caom47CVfgxzmi2iJNu+d";
+            // send the info back to driver station using telemetry function.
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+            telemetry.addData("Alpha", sensorColor.alpha());
+            telemetry.addData("Red  ", sensorColor.red());
+            telemetry.addData("Green", sensorColor.green());
+            telemetry.addData("Blue ", sensorColor.blue());
+            telemetry.addData("Hue", hsvValues[0]);
+
+
+        /*
+         * Initialize the drive system variables.
+         * The init() method of the hardware class does all the work here
+         *
+         */
+
+
+            // Send telemetry message to signify robot waiting;
+            telemetry.addData("Status", "Resetting Encoders");    //
+            telemetry.update();
+
+            //Reset encoders
+            turnOnStopAndReset();
+
+            //Turn on RUN_USING_ENCODER
+            turnOnRunUsingEncoder();
+
+            // Send telemetry message to indicate successful Encoder reset
+            telemetry.addData("Path0", "Starting at %7d :%7d",
+                    robot.getLeftDrive().getCurrentPosition(),
+                    robot.getRightDrive().getCurrentPosition());
+            telemetry.update();
+
+            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+            VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+
+            parameters.vuforiaLicenseKey = "AXe+G0X/////AAAAGWX2PnVHaUK0lbybIB3Luad39Qzmm36RMGPUaiMP4ybPeYkYi7gHFkzHdn5vRGY+J7+0ZFIAVXqKf4PgJP8TpGTqnw8HM/aCP3BpmmYd5nmJxfwxQxzwydbjTovUJGcGqm+FBJVI93jCnHT68WPIv0Aki5yLpXXU6FwlYuzNMixa7FOTIdew60kBpM70uhIX8Y5yx+GKTB2WL3Sl0UKPE7jwWep0BsQe0gidcJdMXQAVU13jBrpXBKUSmKIuuQhWFUax9d/yaOns9mheTCH9S4RgQ96Ln4LwB0SzpIB2/rgQHkSgm7MWmCzsDn95/hRMYhSH82CevjgHqvTvRNIqwZ+caom47CVfgxzmi2iJNu+d";
 
         /*
          * We also indicate which camera on the RC that we wish to use.
          * Here we chose the back (HiRes) camera (for greater range), but
          * for a competition robot, the front camera might be more convenient.
          */
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
-        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+            parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+            this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable relicTemplate = relicTrackables.get(0);
-        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+            VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+            VuforiaTrackable relicTemplate = relicTrackables.get(0);
+            relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+            // Wait for the game to start (driver presses PLAY)
+            waitForStart();
 
-        relicTrackables.activate();
+            relicTrackables.activate();
 
 
-        // Step through each leg of the path,
-        // NOTE: Reverse movement is obtained by setting a negative distance (not speed)
+            // Step through each leg of the path,
+            // NOTE: Reverse movement is obtained by setting a negative distance (not speed)
 
 
 //        robot.getLeftClaw().setPosition(HardwareNut.CLAW_MIN_RANGE);            // S4: Stop and close the claw.
 //        robot.getRightClaw().setPosition(HardwareNut.CLAW_MAX_RANGE);
 //
-        sleep(1500);
+            sleep(1500);
 //        robot.getLiftArm().setPower(.25);
 //        sleep(700);
 //        robot.getLiftArm().setPower(0.0);
 //        sleep(300);
 
-        while (opModeIsActive()) {
+            while (opModeIsActive()) {
 
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            telemetry.addData("VuMark", "%s visible", vuMark);
-            telemetry.update();
-
-
+                RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+                telemetry.addData("VuMark", "%s visible", vuMark);
+                telemetry.update();
 
 
-            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                if (vuMark == RelicRecoveryVuMark.RIGHT) {
 
 
                 /* Found an instance of the template. In the actual game, you will probably
                  * loop until this condition occurs, then move on to act accordingly depending
                  * on which VuMark was visible. */
 //                robot.getLeftClaw().setPosition(.9);            // S4: Stop and close the claw.
-                armDown(2.0);
-                jewel(1.0);
-                robot.getRightClaw().setPosition(-.9);
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED,  -27,  -27, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getIdolLift().setPower(.5);
-                sleep(300);
-                robot.getIdolLift().setPower(0.0);
-                encoderDrive(TURN_SPEED,   -16.5, 16.5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-                encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
-                sleep(1000);
+                    armDown(2.0);
+                    jewel(1.0);
+                    robot.getRightClaw().setPosition(-.9);
+                    sleep(1500);
+                    encoderDrive(DRIVE_SPEED, -28, -28, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                    robot.getIdolLift().setPower(.5);
+                    sleep(300);
+                    robot.getIdolLift().setPower(0.0);
+                    encoderDrive(TURN_SPEED, -19, 19, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
+                    sleep(1500);
 //                robot.getLeftClaw().setPosition(.4);
-                robot.getRightClaw().setPosition(.7);
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                    robot.getRightClaw().setPosition(.7);
+                    sleep(1500);
+                    encoderDrive(DRIVE_SPEED, 5, 5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
 
-                stop();
-            }
-
-
-            else if (vuMark == RelicRecoveryVuMark.LEFT) {
+                    stop();
+                } else if (vuMark == RelicRecoveryVuMark.LEFT) {
 
 
                 /* Found an instance of the template. In the actual game, you will probably
                  * loop until this condition occurs, then move on to act accordingly depending
                  * on which VuMark was visible. */
 //                robot.getLeftClaw().setPosition(.9);            // S4: Stop and close the claw.
-                armDown(2.0);
-                jewel(1.0);
-                robot.getRightClaw().setPosition(-.9);
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED,  -40,  -40, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getIdolLift().setPower(.5);
-                sleep(300);
-                robot.getIdolLift().setPower(0.0);
-                encoderDrive(TURN_SPEED,   -16.5, 16.5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-                encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
-                sleep(1000);
+                    armDown(2.0);
+                    jewel(1.0);
+                    robot.getRightClaw().setPosition(-.9);
+                    sleep(1500);
+                    encoderDrive(DRIVE_SPEED, -43, -43, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                    robot.getIdolLift().setPower(.5);
+                    sleep(300);
+                    robot.getIdolLift().setPower(0.0);
+                    encoderDrive(TURN_SPEED, -19, 19, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
+                    sleep(1500);
 //                robot.getLeftClaw().setPosition(.4);
-                robot.getRightClaw().setPosition(.7);
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                    robot.getRightClaw().setPosition(.7);
+                    sleep(1500);
+                    encoderDrive(DRIVE_SPEED, 5, 5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
 
-                stop();
-            }
-
-
-            else if (vuMark == RelicRecoveryVuMark.CENTER) {
+                    stop();
+                } else if (vuMark == RelicRecoveryVuMark.CENTER) {
 
 
                 /* Found an instance of the template. In the actual game, you will probably
                  * loop until this condition occurs, then move on to act accordingly depending
                  * on which VuMark was visible. */
 //                robot.getLeftClaw().setPosition(.9);            // S4: Stop and close the claw.
-                armDown(2.0);
-                jewel(1.0);
-                robot.getRightClaw().setPosition(-.9);
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED,  -33,  -33, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getIdolLift().setPower(.5);
-                sleep(300);
-                robot.getIdolLift().setPower(0.0);
-                encoderDrive(TURN_SPEED,   -16.5, 16.5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-                encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
-                sleep(1000);
+                    armDown(2.0);
+                    jewel(1.0);
+                    robot.getRightClaw().setPosition(-.9);
+                    sleep(1500);
+                    encoderDrive(DRIVE_SPEED, -35.5, -35.5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                    robot.getIdolLift().setPower(.5);
+                    sleep(300);
+                    robot.getIdolLift().setPower(0.0);
+                    encoderDrive(TURN_SPEED, -19, 19, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
+                    sleep(1500);
 //                robot.getLeftClaw().setPosition(.4);
-                robot.getRightClaw().setPosition(.7);
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                    robot.getRightClaw().setPosition(.7);
+                    sleep(1500);
+                    encoderDrive(DRIVE_SPEED, 5, 5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
 
-                stop();
+                    stop();
+                }
+
+
             }
-
-
-        }
-
-
 
 
 //        robot.getLeftClaw().setPosition(HardwareNut.CLAW_MAX_RANGE);            // S4: Stop and close the claw.
 //        robot.getRightClaw().setPosition(HardwareNut.CLAW_MIN_RANGE);
-  //      sleep(1500);     // pause for servos to move
+            //      sleep(1500);     // pause for servos to move
 
 //        telemetry.addData("Path", "Complete");
 //        telemetry.update();
-        sleep(500);
+            telemetry.update();
+            sleep(500);
+
+        }
     }
 
     /**
@@ -324,8 +379,8 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftDriveTarget,  newRightDriveTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                                            robot.getLeftDrive().getCurrentPosition(),
-                                            robot.getRightDrive().getCurrentPosition());
+                        robot.getLeftDrive().getCurrentPosition(),
+                        robot.getRightDrive().getCurrentPosition());
                 telemetry.update();
             }
 
@@ -401,44 +456,42 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
         robot.getRightArm().setPower(power);
     }
 
-
-
-
     public void jewel ( double holdTime){
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime) {
 
-            Color.RGBToHSV(sensorColor.red() * 8, sensorColor.green() * 8, sensorColor.blue() * 8, hsvValues);
 
 
-            if (hsvValues[0] < 100 || hsvValues[0] > 300) { // red ball
-                sleep(500);
-                encoderDrive(TURN_SPEED, -3.3, 3.3, 2);
-                robot.getBallarm().setPower(-.7);
+
+            if (sensorColor.blue() > 30) {
+
+                sleep(1000);
+                encoderDrive(TURN_SPEED, -3, 3, 2);
+                robot.getBallarm().setPower(-.8);
                 sleep(2300);
                 robot.getBallarm().setPower(0.0);
                 encoderDrive(DRIVE_SPEED, 3.5, -3.5, 2);
                 sleep(1000);
+//                robot.getBallarm().setPosition(0.0);
             }
+            else if (sensorColor.red() > 30) {
 
-            else if (hsvValues[0] > 100 || hsvValues[0] < 300) { // blue ball
-                sleep(500);
-                encoderDrive(TURN_SPEED, 3.3, -3.3, 2);
-                robot.getBallarm().setPower(-.7);
+                sleep(1000);
+                encoderDrive(TURN_SPEED, 3, -3, 2);
+                robot.getBallarm().setPower(-.8);
                 sleep(2300);
                 robot.getBallarm().setPower(0.0);
                 encoderDrive(TURN_SPEED, -3.5, 3.5, 2);
                 sleep(1000);
-
+                // robot.getBallarm().setPosition(0.0);
             }
+            else {
+                sleep(3000);
+                stop();
 
-            else{
-                sleep(1000);
             }
         }
-
-
 
     }
 
@@ -446,10 +499,9 @@ public class PushbotAutoDriveByEncoder_Linear_SideRed extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime)
-            robot.getBallarm().setPower(.4);
-            sleep(1300);
-            robot.getBallarm().setPower(0.0);
-            sleep(1000);
+            robot.getBallarm().setPower(.5);
+        sleep(1400);
+        robot.getBallarm().setPower(0.0);
     }
 
 }

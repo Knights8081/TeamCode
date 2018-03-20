@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamCode;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -13,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.teamCode.forLater.SensorREVColorDistance;
 
 /**
  * Created by lfrazer on 1/13/18.
@@ -36,6 +39,9 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
     VuforiaLocalizer vuforia;
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
+    private float hsvValues[] = {0F, 0F, 0F};
+    SensorREVColorDistance hwSensor = new SensorREVColorDistance();
+
 
 
     OpenGLMatrix lastLocation = null;
@@ -55,6 +61,8 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
          *
          */
         robot.init(hardwareMap);
+
+        hwSensor.init();
 
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
 
@@ -108,7 +116,7 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
 
 
 //
-        sleep(1500);
+//        sleep(1500);
 //        robot.getLiftArm().setPower(.4);
 //        sleep(1000);
 //        robot.getLiftArm().setPower(0.0);
@@ -130,20 +138,20 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
                  * loop until this condition occurs, then move on to act accordingly depending
                  * on which VuMark was visible. */
 //                robot.getLeftClaw().setPosition(.9);            // S4: Stop and close the claw.
-//                armDown(2.0);
-//                jewel(1.0);
+                armDown(2.0);
+                jewel(1.0);
                 robot.getRightClaw().setPosition(-.9);
-                sleep(1500);
-                encoderDrive(DRIVE_SPEED,  41,  41, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                sleep(1000);
+                encoderDrive(DRIVE_SPEED,  39,  39, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
                 robot.getIdolLift().setPower(.5);
                 sleep(300);
                 robot.getIdolLift().setPower(0.0);
-                encoderDrive(TURN_SPEED,   -19, 19, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                encoderDrive(TURN_SPEED,   -16.5, 16.5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
-                sleep(1500);
+                sleep(1000);
 //                robot.getLeftClaw().setPosition(.4);
                 robot.getRightClaw().setPosition(.7);
-                sleep(1500);
+                sleep(1000);
                 encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
 
                 stop();
@@ -157,20 +165,20 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
                  * loop until this condition occurs, then move on to act accordingly depending
                  * on which VuMark was visible. */
 //                robot.getLeftClaw().setPosition(.9);            // S4: Stop and close the claw.
-//                armDown(2.0);
-//                jewel(1.0);
+                armDown(2.0);
+                jewel(1.0);
                 robot.getRightClaw().setPosition(-.9);
-                sleep(1500);
-                encoderDrive(DRIVE_SPEED,  25.5,  25.5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                sleep(1000);
+                encoderDrive(DRIVE_SPEED,  25,  25, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
                 robot.getIdolLift().setPower(.5);
                 sleep(300);
                 robot.getIdolLift().setPower(0.0);
-                encoderDrive(TURN_SPEED,   -19, 19, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                encoderDrive(TURN_SPEED,   -17, 17, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
-                sleep(1500);
+                sleep(1000);
 //                robot.getLeftClaw().setPosition(.4);
                 robot.getRightClaw().setPosition(.7);
-                sleep(1500);
+                sleep(1000);
                 encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
 
 
@@ -186,20 +194,20 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
                  * loop until this condition occurs, then move on to act accordingly depending
                  * on which VuMark was visible. */
 //                robot.getLeftClaw().setPosition(.9);            // S4: Stop and close the claw.
-//                armDown(2.0);
-//                jewel(1.0);
+                armDown(2.0);
+                jewel(1.0);
                 robot.getRightClaw().setPosition(-.9);
-                sleep(1500);
-                encoderDrive(DRIVE_SPEED,  32.5,  32.5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                sleep(1000);
+                encoderDrive(DRIVE_SPEED,  32,  32, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
                 robot.getIdolLift().setPower(.5);
                 sleep(300);
                 robot.getIdolLift().setPower(0.0);
-                encoderDrive(TURN_SPEED,   -19, 19, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                encoderDrive(TURN_SPEED,   -16.5, 16.5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
                 encoderDrive(DRIVE_SPEED, -12, -12, 4.0);  // S3: Reverse 12 Inches with 4 Sec timeout
-                sleep(1500);
+                sleep(1000);
 //                robot.getLeftClaw().setPosition(.4);
                 robot.getRightClaw().setPosition(.7);
-                sleep(1500);
+                sleep(1000);
                 encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
 
                 stop();
@@ -345,32 +353,44 @@ public class PushbotAutoDriveByEncoder_Linear_SideBlue extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime)
-            if (sensorColor.blue() > 3) {
 
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED, -3, -3, 2);
-                encoderDrive(DRIVE_SPEED, 3.3, 3.3, 2);
-//                robot.getBallarm().setPosition(0.0);
-                robot.getBallarm().setPower(-.8);
-                sleep(2300);
-                robot.getBallarm().setPower(0.0);
-            } else {
-                sleep(1000);
-                encoderDrive(DRIVE_SPEED, 3, 3, 2);
-                encoderDrive(DRIVE_SPEED, -3.3, -3.3, 2);
-                // robot.getBallarm().setPosition(0.0);
-                robot.getBallarm().setPower(-.8);
-                sleep(2300);
-                robot.getBallarm().setPower(0.0);
-            }
+            Color.RGBToHSV(sensorColor.red() * 8, sensorColor.green() * 8, sensorColor.blue() * 8, hsvValues);
+
+
+        if (hsvValues[0] < 100 || hsvValues[0] > 300)  {
+
+            sleep(500);
+            encoderDrive(DRIVE_SPEED, 3.3, -3.3, 2);
+            robot.getBallarm().setPower(-.7);
+            sleep(2300);
+            robot.getBallarm().setPower(0.0);
+            encoderDrive(DRIVE_SPEED, -3.5, 3.5, 2);
+            sleep(1000);
+        }
+
+        else if (hsvValues[0] > 100 || hsvValues[0] < 300){
+
+            sleep(500);
+            encoderDrive(DRIVE_SPEED, -3.3, 3.3, 2);
+            robot.getBallarm().setPower(-.7);
+            sleep(2300);
+            robot.getBallarm().setPower(0.0);
+            encoderDrive(DRIVE_SPEED, 3.5, -3.5, 2);
+            sleep(1000);
+        }
+
+        else{
+            sleep(1000);
+        }
     }
 
     public void armDown(double holdTime) {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while (opModeIsActive() && holdTimer.time() < holdTime)
-            robot.getBallarm().setPower(.5);
-        sleep(1400);
-        robot.getBallarm().setPower(0.0);
+            robot.getBallarm().setPower(.4);
+            sleep(1300);
+            robot.getBallarm().setPower(0.0);
+            sleep(1000);
     }
 }

@@ -74,7 +74,7 @@ import org.firstinspires.ftc.teamcode.teamCode.HardwareNut;
  */
 
 @Autonomous(name="Pushbot: Auto Drive By Gyro", group="Pushbot")
-
+@Disabled
 public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */

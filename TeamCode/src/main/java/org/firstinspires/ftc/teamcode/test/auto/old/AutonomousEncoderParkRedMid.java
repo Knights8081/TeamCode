@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 
 import java.util.Locale;
 
@@ -61,8 +62,8 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double leftClawPosition = robot.CLAW_HOME;                   // Servo safe position
-    double rightClawPosition = robot.CLAW_HOME;
+    double leftClawPosition = RobotConstants.CLAW_HOME;                   // Servo safe position
+    double rightClawPosition = RobotConstants.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
@@ -180,7 +181,7 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(RobotConstants.CLAW_MAX_RANGE);
 
             if (sensorColor.red() >= 60) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.pd.constants;
 /**
  * Created by afield on 3/21/2018.
  */
-
 public class RobotConstants {
 
     /* Arm Constants */

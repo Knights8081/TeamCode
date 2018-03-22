@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.MoveClaw;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.StrafeByHand;
 
@@ -106,9 +107,9 @@ public class MechanumWheelsOnePad_old extends OpMode {
         handPositions = robot.getIdolHandPosition();
 
         if (gamepad1.b)
-            MoveClaw.closeClaw(clawPositions, HardwareNut.CLAW_SPEED);
+            MoveClaw.closeClaw(clawPositions, RobotConstants.CLAW_SPEED);
         else if (gamepad1.x)
-            MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
+            MoveClaw.openClaw(clawPositions, RobotConstants.CLAW_SPEED);
 
         if (gamepad1.right_bumper){
             robot.getIdolHand().setPosition(1.0);

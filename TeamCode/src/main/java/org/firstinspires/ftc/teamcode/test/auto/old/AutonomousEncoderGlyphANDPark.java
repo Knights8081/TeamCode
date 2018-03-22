@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 
 import java.util.Locale;
 
@@ -64,7 +65,7 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double          clawPosition    = robot.CLAW_HOME;
+    double          clawPosition    = RobotConstants.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1220;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
@@ -183,7 +184,7 @@ public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
 
 
 
-            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(RobotConstants.CLAW_MAX_RANGE);
             if (sensorColor.red() >= 65)
             {   encoderDrive(DRIVE_SPEED, 2, 2, 4.0);
                 robot.getRightClaw().setPosition(ARM_HOME);

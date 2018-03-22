@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.MoveClaw;
 
 /**
@@ -52,9 +53,9 @@ public class ServoTest extends OpMode {
         positions = robot.getClawPositions();
 
         if (gamepad2.x)
-            MoveClaw.closeClaw(positions, HardwareNut.CLAW_SPEED);
+            MoveClaw.closeClaw(positions, RobotConstants.CLAW_SPEED);
         else if (gamepad2.b)
-            MoveClaw.openClaw(positions, HardwareNut.CLAW_SPEED);
+            MoveClaw.openClaw(positions, RobotConstants.CLAW_SPEED);
 
         setPositions();
     }

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pd.teamCodeGCS;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 
 /**
  * This class contains functions to update the positions for the hands on the claw
@@ -27,8 +28,8 @@ public final class MoveClaw {
         positions[1] -= speed;
 
         /* Clip the positions to make sure they are within the valid range for the servos */
-        positions[0]  = Range.clip(positions[0], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
-        positions[1] = Range.clip(positions[1], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
+        positions[0]  = Range.clip(positions[0], RobotConstants.CLAW_MIN_RANGE, RobotConstants.CLAW_MAX_RANGE);
+        positions[1] = Range.clip(positions[1], RobotConstants.CLAW_MIN_RANGE, RobotConstants.CLAW_MAX_RANGE);
     }
 
     /**
@@ -47,7 +48,7 @@ public final class MoveClaw {
         positions[1] += speed;
 
         /* Clip the positions to make sure they are within the valid range for the servos */
-        positions[0]  = Range.clip(positions[0], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
-        positions[1] = Range.clip(positions[1], HardwareNut.CLAW_MIN_RANGE, HardwareNut.CLAW_MAX_RANGE);
+        positions[0]  = Range.clip(positions[0], RobotConstants.CLAW_MIN_RANGE, RobotConstants.CLAW_MAX_RANGE);
+        positions[1] = Range.clip(positions[1], RobotConstants.CLAW_MIN_RANGE, RobotConstants.CLAW_MAX_RANGE);
     }
 }

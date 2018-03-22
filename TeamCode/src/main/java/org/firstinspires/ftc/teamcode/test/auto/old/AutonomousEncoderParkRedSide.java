@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 
 import java.util.Locale;
 
@@ -60,7 +61,7 @@ public class AutonomousEncoderParkRedSide extends LinearOpMode {
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double clawPosition = robot.CLAW_HOME;
+    double clawPosition = RobotConstants.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
@@ -178,7 +179,7 @@ public class AutonomousEncoderParkRedSide extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
+            robot.getRightClaw().setPosition(RobotConstants.CLAW_MAX_RANGE);
             sleep(1000);
             if (sensorColor.red() >= 60) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 3.0);

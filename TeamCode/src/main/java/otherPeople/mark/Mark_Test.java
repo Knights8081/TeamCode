@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.MoveClaw;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.StrafeByHand;
 
-import java.awt.Robot;
 
 /**
  * Created 10/18/2017

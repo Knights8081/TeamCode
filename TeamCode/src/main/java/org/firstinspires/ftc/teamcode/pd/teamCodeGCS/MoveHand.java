@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pd.teamCodeGCS;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 
 /**
  * This class contains functions to update the positions for the hands on the claw
@@ -27,8 +28,8 @@ public final class MoveHand {
         handpositions[1] -= speedhand;
 
         /* Clip the positions to make sure they are within the valid range for the servos */
-        handpositions[0]  = Range.clip(handpositions[0], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
-        handpositions[1] = Range.clip(handpositions[1], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
+        handpositions[0]  = Range.clip(handpositions[0], RobotConstants.IDOLHAND_MIN_RANGE, RobotConstants.IDOLHAND_MAX_RANGE);
+        handpositions[1] = Range.clip(handpositions[1], RobotConstants.IDOLHAND_MIN_RANGE, RobotConstants.IDOLHAND_MAX_RANGE);
     }
 
     /**
@@ -47,7 +48,7 @@ public final class MoveHand {
         handpositions[1] += speedhand;
 
         /* Clip the positions to make sure they are within the valid range for the servos */
-        handpositions[0]  = Range.clip(handpositions[0], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
-        handpositions[1] = Range.clip(handpositions[1], HardwareNut.IDOLHAND_MIN_RANGE, HardwareNut.IDOLHAND_MAX_RANGE);
+        handpositions[0]  = Range.clip(handpositions[0], RobotConstants.IDOLHAND_MIN_RANGE, RobotConstants.IDOLHAND_MAX_RANGE);
+        handpositions[1] = Range.clip(handpositions[1], RobotConstants.IDOLHAND_MIN_RANGE, RobotConstants.IDOLHAND_MAX_RANGE);
     }
 }

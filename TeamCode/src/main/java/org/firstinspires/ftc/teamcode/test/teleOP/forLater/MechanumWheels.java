@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.test.teleOP.forLater;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.MoveClaw;
 import org.firstinspires.ftc.teamcode.pd.teamCodeGCS.StrafeByHand;
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
@@ -105,9 +106,9 @@ public class MechanumWheels extends OpMode {
         clawPositions = robot.getClawPositions();
 
         if (gamepad2.b)
-            MoveClaw.closeClaw(clawPositions, HardwareNut.CLAW_SPEED);
+            MoveClaw.closeClaw(clawPositions, RobotConstants.CLAW_SPEED);
         else if (gamepad2.x)
-            MoveClaw.openClaw(clawPositions, HardwareNut.CLAW_SPEED);
+            MoveClaw.openClaw(clawPositions, RobotConstants.CLAW_SPEED);
 
 
         if (gamepad2.left_bumper)

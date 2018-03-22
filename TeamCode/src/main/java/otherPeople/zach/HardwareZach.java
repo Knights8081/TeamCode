@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.pd;
+package otherPeople.zach;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -50,84 +50,68 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwarePushBot
+public class HardwareZach
 {
     /* Public OpMode members. */
-    private DcMotor  leftDrive   = null;
-    private DcMotor  rightDrive  = null;
-    private DcMotor  leftArm     = null;
-    private DcMotor  rightArm    = null;
-    private DcMotor  liftArm     = null;
+    public DcMotor  leftFrontDrive   = null;
+    public DcMotor  rightFrontDrive  = null;
+    public DcMotor  leftRearDrive   = null;
+    public DcMotor  rightRearDrive  = null;
+    public DcMotor  glyphArm   = null;
+    public DcMotor  glyphDumper  = null;
+    public DcMotor  slide     = null;
+    public DcMotor  leftDrive = null;
+    public DcMotor  rightDrive = null;
+    public DcMotor  leftArm = null;
+    public Servo    leftClaw    = null;
+    public Servo    rightClaw   = null;
+    public Servo    leftbottomClaw    = null;
+    public Servo    rightbottomClaw   = null;
 
-    private Servo    leftClaw    = null;
-    private Servo    rightClaw   = null;
+
+
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
 
     /* local OpMode members. */
-//    HardwareMap hwMap           =  null;
-//    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap           =  null;
+    private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwarePushBot() {
-    }
+    public HardwareZach(){
 
-    public DcMotor getLeftDrive() {
-        return leftDrive;
-    }
-
-    public DcMotor getRightDrive() {
-        return rightDrive;
-    }
-
-    public DcMotor getLeftArm() {
-        return leftArm;
-    }
-
-    public DcMotor getRightArm() {
-        return rightArm;
-    }
-
-    public Servo getLeftClaw() {
-        return leftClaw;
-    }
-
-    public Servo getRightClaw() {
-        return rightClaw;
     }
 
     /* Initialize standard Hardware interfaces */
-    public void init(final HardwareMap hwMap) {
+    public void init(HardwareMap ahwMap) {
+        // Save reference to Hardware map
+        hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftDrive  = hwMap.get(DcMotor.class, "left_drive");
-        rightDrive = hwMap.get(DcMotor.class, "right_drive");
+        leftFrontDrive  = hwMap.get(DcMotor.class, "leftF_drive");
+        rightFrontDrive = hwMap.get(DcMotor.class, "rightF_drive");
+        leftRearDrive  = hwMap.get(DcMotor.class, "left_drive");
+        rightRearDrive = hwMap.get(DcMotor.class, "right_drive");
         leftArm    = hwMap.get(DcMotor.class, "left_arm");
-        rightArm   = hwMap.get(DcMotor.class, "right_arm");
-
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);      // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);     // Set to FORWARD if using AndyMark motors
-        leftArm.setDirection(DcMotor.Direction.FORWARD);        // Set to REVERSE if using AndyMark motors
-        rightArm.setDirection(DcMotor.Direction.REVERSE);       // Set to FORWARD if using AndyMark motors
+        leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
         // Set all motors to zero power
-        leftDrive.setPower(0.0);
-        rightDrive.setPower(0.0);
-        leftArm.setPower(0.0);
-        rightArm.setPower(0.0);
+        leftDrive.setPower(0);
+        rightDrive.setPower(0);
+        leftArm.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-        leftClaw  = hwMap.get(Servo.class, "left_claw");
-        rightClaw = hwMap.get(Servo.class, "right_claw");
+        leftClaw  = hwMap.get(Servo.class, "left_hand");
+        rightClaw = hwMap.get(Servo.class, "right_hand");
         leftClaw.setPosition(MID_SERVO);
         rightClaw.setPosition(MID_SERVO);
     }

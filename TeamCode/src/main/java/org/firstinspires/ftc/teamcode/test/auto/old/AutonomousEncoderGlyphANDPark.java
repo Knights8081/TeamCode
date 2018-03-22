@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.test.auto.forLater;
+package org.firstinspires.ftc.teamcode.test.auto.old;
 
 /**
  * Created by afield on 9/27/2017.
@@ -48,20 +48,24 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Red: Auto Drive Park Side", group="Red")
+@Autonomous(name="Red: Auto Drive Glyph Mid Park", group="Red")
 @Disabled
-public class AutonomousEncoderParkRedSide extends LinearOpMode {
+public class AutonomousEncoderGlyphANDPark extends LinearOpMode {
 
+
+    /* Declare OpMode members. */
     HardwareNut robot = new HardwareNut();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
+
+
 
 
     public final static double ARM_HOME = 0.08;
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double clawPosition = robot.CLAW_HOME;
-    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
+    double          clawPosition    = robot.CLAW_HOME;
+    static final double COUNTS_PER_MOTOR_REV = 1220;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -178,30 +182,43 @@ public class AutonomousEncoderParkRedSide extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
+
             robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
-            sleep(1000);
-            if (sensorColor.red() >= 60) {
-                encoderDrive(DRIVE_SPEED, 2, 2, 3.0);
+            if (sensorColor.red() >= 65)
+            {   encoderDrive(DRIVE_SPEED, 2, 2, 4.0);
                 robot.getRightClaw().setPosition(ARM_HOME);
-                stop();
+                encoderDrive(DRIVE_SPEED,  -2,  -3, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                encoderDrive(TURN_SPEED,   2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                encoderDrive(DRIVE_SPEED, -10, -10, 4.0);
+                encoderDrive(TURN_SPEED, -5, 5, 4.0);
+                encoderDrive(DRIVE_SPEED, -5, -5, 4.0);
+                sleep(5000);
             }
 
-            else if (sensorColor.blue() >= 60) {
-                encoderDrive(DRIVE_SPEED, -2, -2, 3.0);
+            else if (sensorColor.blue() >= 65) {
+                encoderDrive(DRIVE_SPEED, -2, -3, 3.0);
                 robot.getRightClaw().setPosition(ARM_HOME);
-                stop();
+                encoderDrive(TURN_SPEED, 2, -2, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                encoderDrive(DRIVE_SPEED, -10, -10, 4.0);
+                encoderDrive(TURN_SPEED, -5, 5, 4.0);
+                encoderDrive(DRIVE_SPEED, -5, -5, 4.0);
+                sleep(5000);
             }
-            if (sensorColor.red() < 60) {
+
+            if (sensorColor.red() < 65)
+            {
                 robot.getLeftDrive().setPower(0);
                 robot.getRightDrive().setPower(0);
                 robot.getLeftArm().setPower(0);
                 robot.getRightArm().setPower(0);
-            } else if (sensorColor.blue() < 60) {
+            }
+            else if (sensorColor.blue() < 65) {
                 robot.getLeftArm().setPower(0);
                 robot.getRightArm().setPower(0);
                 robot.getLeftDrive().setPower(0);
                 robot.getRightDrive().setPower(0);
             }
+
 
 
             sleep(1000);     // pause for servos to move
@@ -295,6 +312,8 @@ public class AutonomousEncoderParkRedSide extends LinearOpMode {
 
 
             //  sleep(250);   // optional pause after each move
+
+
 
 
         }

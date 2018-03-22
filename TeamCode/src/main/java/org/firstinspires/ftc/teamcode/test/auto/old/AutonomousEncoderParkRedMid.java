@@ -1,16 +1,25 @@
-package org.firstinspires.ftc.teamcode.test.auto.forLater;
+package org.firstinspires.ftc.teamcode.test.auto.old;
 
 /**
  * Created by afield on 9/27/2017.
  */
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pd.HardwareNut;
+
+import java.util.Locale;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -39,21 +48,28 @@ import org.firstinspires.ftc.teamcode.pd.HardwareNut;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Blue: Auto Drive Glyph Park Mid", group="Blue")
+@Autonomous(name="Red: Auto Drive Park Mid ", group="Red")
 @Disabled
-public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
+public class AutonomousEncoderParkRedMid extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareNut robot   = new HardwareNut();   // Use a Pushbot's hardware
+    HardwareNut robot = new HardwareNut();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+
+    public final static double ARM_HOME = 0.08;
+    public final static double CLAW_HOME = 0.08;
+
+    final double CLAW_SPEED = 0.02;
+    double leftClawPosition = robot.CLAW_HOME;                   // Servo safe position
+    double rightClawPosition = robot.CLAW_HOME;
+    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
+    static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
+    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double DRIVE_SPEED = 0.6;
+    static final double TURN_SPEED = 0.5;
 
     @Override
     public void runOpMode() {
@@ -68,12 +84,6 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        robot.getLeftDrive().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.getRightDrive().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.getRightArm().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.getLeftArm().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
 
         robot.getLeftDrive().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.getRightDrive().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -82,7 +92,7 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
 
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
+        telemetry.addData("Path0", "Starting at %7d :%7d",
                 robot.getLeftDrive().getCurrentPosition(),
                 robot.getRightDrive().getCurrentPosition(),
                 robot.getRightArm().getCurrentPosition(),
@@ -91,21 +101,116 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
 
         telemetry.update();
 
-        // Wait for the game to start (driver presses PLAY)
+
+        ColorSensor sensorColor;
+        DistanceSensor sensorDistance;
+
+
+        robot.init(hardwareMap);
+
+
+        // get a reference to the color sensor.
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+
+        // get a reference to the distance sensor that shares the same name.
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F, 0F, 0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
+
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
+        // wait for the start button to be pressed.
         waitForStart();
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  12,  12, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   4, -4, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, 8, 8, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        // loop and read the RGB and distance data.
+        // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
+        while (opModeIsActive()) {
+            // convert the RGB values to HSV values.
+            // multiply by the SCALE_FACTOR.
+            // then cast it back to int (SCALE_FACTOR is a double)
+            Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                    (int) (sensorColor.green() * SCALE_FACTOR),
+                    (int) (sensorColor.blue() * SCALE_FACTOR),
+                    hsvValues);
 
-        robot.getRightClaw().setPosition(1.0);            // S4: Stop and close the claw.
-        robot.getRightClaw().setPosition(0.0);
-        sleep(1000);     // pause for servos to move
+            // send the info back to driver station using telemetry function.
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+            telemetry.addData("Alpha", sensorColor.alpha());
+            telemetry.addData("Red  ", sensorColor.red());
+            telemetry.addData("Green", sensorColor.green());
+            telemetry.addData("Blue ", sensorColor.blue());
+            telemetry.addData("Hue", hsvValues[0]);
 
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
+
+            // change the background color to match the color detected by the RGB sensor.
+            // pass a reference to the hue, saturation, and value array as an argument
+            // to the HSVToColor method.
+            relativeLayout.post(new Runnable() {
+                public void run() {
+                    relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+
+
+                }
+            });
+
+
+            telemetry.update();
+
+
+            // Set the panel back to the default color
+            relativeLayout.post(new Runnable() {
+                public void run() {
+                    relativeLayout.setBackgroundColor(Color.WHITE);
+                }
+            });
+
+
+            // Wait for the game to start (driver presses PLAY)
+
+
+            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
+
+            if (sensorColor.red() >= 60) {
+                encoderDrive(DRIVE_SPEED, 2, 2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                robot.getRightClaw().setPosition(ARM_HOME);
+
+                sleep(5000);
+            } else if (sensorColor.blue() >= 60) {
+                encoderDrive(DRIVE_SPEED, -2, -2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                robot.getRightClaw().setPosition(ARM_HOME);
+
+                sleep(5000);
+            }
+            if (sensorColor.red() < 60) {
+                robot.getLeftDrive().setPower(0);
+                robot.getRightDrive().setPower(0);
+                robot.getLeftArm().setPower(0);
+                robot.getRightArm().setPower(0);
+            } else if (sensorColor.blue() < 60) {
+                robot.getLeftArm().setPower(0);
+                robot.getRightArm().setPower(0);
+                robot.getLeftDrive().setPower(0);
+                robot.getRightDrive().setPower(0);
+            }
+
+
+            sleep(1000);     // pause for servos to move
+
+            telemetry.addData("Path", "Complete");
+            telemetry.update();
+        }
     }
 
     /*
@@ -116,6 +221,7 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
      */
+
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -128,17 +234,16 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.getLeftDrive().getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.getRightDrive().getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newBackRightTarget = robot.getRightArm().getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newBackLeftTarget = robot.getLeftArm().getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newLeftTarget = robot.getLeftDrive().getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.getRightDrive().getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newBackRightTarget = robot.getRightArm().getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newBackLeftTarget = robot.getLeftArm().getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
 
 
             robot.getLeftDrive().setTargetPosition(newLeftTarget);
             robot.getRightDrive().setTargetPosition(newRightTarget);
             robot.getRightArm().setTargetPosition(newBackRightTarget);
             robot.getLeftArm().setTargetPosition(newBackLeftTarget);
-
 
 
             // Turn On RUN_TO_POSITION
@@ -156,7 +261,6 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
             robot.getLeftArm().setPower(Math.abs(speed));
 
 
-
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
             // its target position, the motion will stop.  This is "safer" in the event that the robot will
@@ -170,8 +274,8 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
             {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d",
                         robot.getLeftDrive().getCurrentPosition(),
                         robot.getRightDrive().getCurrentPosition(),
                         robot.getRightArm().getCurrentPosition(),
@@ -192,8 +296,9 @@ public class AutonomousEncoderGlyphANDParkMid extends LinearOpMode {
             robot.getLeftArm().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-
             //  sleep(250);   // optional pause after each move
+
+
         }
     }
 }

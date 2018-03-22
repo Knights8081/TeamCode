@@ -36,6 +36,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 
+import org.firstinspires.ftc.teamcode.pd.constants.RobotConstants;
+
 /**
  * This is NOT an opmode.
  *
@@ -76,25 +78,6 @@ public class HardwareNut {
     private Servo    idolDead   = null;
 
 
-
-    /* Define global constants ------------------------------------------------------------------*/
-
-    /* Arm Constants */
-    public static final double ARM_UP_POWER         =   0.45;
-    public static final double ARM_DOWN_POWER       =  -0.45;
-
-    /* Servo Constants */
-    public static final double CLAW_MIN_RANGE       =   0.05;
-    public static final double CLAW_MAX_RANGE       =   1.3;
-    public static final double CLAW_HOME            =   0.08;
-    public static final double CLAW_SPEED           =   0.05;
-    public static final double MID_SERVO            =   0.0;    //TODO - Determine if we still want to use this as it isn't in our range
-
-    /* Idol Hand Constants */
-    public static final double IDOLHAND_MIN_RANGE   =   0.05;
-    public static final double IDOLHAND_MAX_RANGE   =   1.3;
-    public static final double IDOLHAND_HOME        =   0.08;
-    public static final double IDOL_SPEED           =   0.05;
 
 
     /**
@@ -212,12 +195,6 @@ public class HardwareNut {
 //        barm.setDirection(DcMotor.Direction.FORWARD);
 //        ballarm.setDirection(DcMotor.Direction.FORWARD);
 
-//        TODO - Why are these here? Are we using them anywhere but here?
-//        DcMotor FR = hwMap.get(DcMotor.class, "right_drive");
-//        DcMotor FL = hwMap.get(DcMotor.class, "left_drive");
-//        DcMotor BR = hwMap.get(DcMotor.class, "right_drive");
-//        DcMotor BL = hwMap.get(DcMotor.class, "right_drive");
-
 
 
         // Set all motors to zero power
@@ -229,10 +206,6 @@ public class HardwareNut {
         rightArm.setPower(0);
         liftArm.setPower(0);
         ballarm.setPower(0);
-//        FR.setPower(0);
-//        FL.setPower(0);
-//        BR.setPower(0);
-//        BL.setPower(0);
 //        idolSlide.setPower(0);
         idolLift.setPower(0);
         glyph.setPower(0);
@@ -243,10 +216,6 @@ public class HardwareNut {
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        idolSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         idolLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -266,13 +235,13 @@ public class HardwareNut {
         idolDead = hwMap.get(Servo.class, "idol_dead");
 
 
-        rightClaw.setPosition(CLAW_MIN_RANGE);
-        leftClaw.setPosition(CLAW_MAX_RANGE);
-        topRightClaw.setPosition(CLAW_MIN_RANGE);
-        topLeftClaw.setPosition(CLAW_MIN_RANGE);
+        rightClaw.setPosition(RobotConstants.CLAW_MIN_RANGE);
+        leftClaw.setPosition(RobotConstants.CLAW_MAX_RANGE);
+        topRightClaw.setPosition(RobotConstants.CLAW_MIN_RANGE);
+        topLeftClaw.setPosition(RobotConstants.CLAW_MIN_RANGE);
 
-        idolHand.setPosition(IDOLHAND_MIN_RANGE);
-        idolDead.setPosition(IDOLHAND_MIN_RANGE);
+        idolHand.setPosition(RobotConstants.IDOLHAND_MIN_RANGE);
+        idolDead.setPosition(RobotConstants.IDOLHAND_MIN_RANGE);
 
     }
 }

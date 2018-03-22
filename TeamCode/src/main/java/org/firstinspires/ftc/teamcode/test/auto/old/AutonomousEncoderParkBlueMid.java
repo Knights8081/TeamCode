@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.test.auto.forLater;
+package org.firstinspires.ftc.teamcode.test.auto.old;
 
 /**
  * Created by afield on 9/27/2017.
@@ -48,9 +48,10 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Red: Auto Drive Park Mid ", group="Red")
+@Autonomous(name="Blue: Auto Drive Mid Park", group="Blue")
 @Disabled
-public class AutonomousEncoderParkRedMid extends LinearOpMode {
+public class AutonomousEncoderParkBlueMid extends LinearOpMode {
+
 
     /* Declare OpMode members. */
     HardwareNut robot = new HardwareNut();   // Use a Pushbot's hardware
@@ -61,8 +62,7 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
-    double leftClawPosition = robot.CLAW_HOME;                   // Servo safe position
-    double rightClawPosition = robot.CLAW_HOME;
+    double clawPosition = robot.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
@@ -79,6 +79,11 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+
+
+
+
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -106,7 +111,7 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
         DistanceSensor sensorDistance;
 
 
-        robot.init(hardwareMap);
+
 
 
         // get a reference to the color sensor.
@@ -181,17 +186,17 @@ public class AutonomousEncoderParkRedMid extends LinearOpMode {
 
 
             robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
-
+            sleep(1000);
             if (sensorColor.red() >= 60) {
-                encoderDrive(DRIVE_SPEED, 2, 2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getRightClaw().setPosition(ARM_HOME);
+                encoderDrive(DRIVE_SPEED, -2, -2, 3.0);
 
-                sleep(5000);
+                robot.getRightClaw().setPosition(ARM_HOME);
+                stop();
             } else if (sensorColor.blue() >= 60) {
-                encoderDrive(DRIVE_SPEED, -2, -2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, 2, 2, 3.0);
                 robot.getRightClaw().setPosition(ARM_HOME);
 
-                sleep(5000);
+                stop();
             }
             if (sensorColor.red() < 60) {
                 robot.getLeftDrive().setPower(0);

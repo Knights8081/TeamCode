@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.pd.forLater;
+package org.firstinspires.ftc.teamcode.pd.old;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -38,82 +38,66 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * This is NOT an opmode.
  *
  * This class can be used to define all the specific hardware for a single robot.
- * In this case that robot is a Pushbot.
- * See PushbotTeleopTank_Iterative and others classes starting with "Pushbot" for usage examples.
+ * In this case that robot is a K9 robot.
  *
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
  *
  * Motor channel:  Left  drive motor:        "left_drive"
  * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Manipulator drive motor:  "left_arm"
- * Servo channel:  Servo to open left claw:  "left_hand"
- * Servo channel:  Servo to open right claw: "right_hand"
+ * Servo channel:  Servo to raise/lower arm: "arm"
+ * Servo channel:  Servo to open/close claw: "claw"
+ *
+ * Note: the configuration of the servos is such that:
+ *   As the arm servo approaches 0, the arm position moves up (away from the floor).
+ *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-public class HardwareZach
+public class HardwareK9bot
 {
     /* Public OpMode members. */
-    public DcMotor  leftFrontDrive   = null;
-    public DcMotor  rightFrontDrive  = null;
-    public DcMotor  leftRearDrive   = null;
-    public DcMotor  rightRearDrive  = null;
-    public DcMotor  glyphArm   = null;
-    public DcMotor  glyphDumper  = null;
-    public DcMotor  slide     = null;
-    public DcMotor  leftDrive = null;
-    public DcMotor  rightDrive = null;
-    public DcMotor  leftArm = null;
-    public Servo    leftClaw    = null;
-    public Servo    rightClaw   = null;
-    public Servo    leftbottomClaw    = null;
-    public Servo    rightbottomClaw   = null;
+    public DcMotor  leftDrive   = null;
+    public DcMotor  rightDrive  = null;
+    public Servo    arm         = null;
+    public Servo    claw        = null;
 
+    public final static double ARM_HOME = 0.2;
+    public final static double CLAW_HOME = 0.2;
+    public final static double ARM_MIN_RANGE  = 0.20;
+    public final static double ARM_MAX_RANGE  = 0.90;
+    public final static double CLAW_MIN_RANGE  = 0.20;
+    public final static double CLAW_MAX_RANGE  = 0.7;
 
-
-
-    public static final double MID_SERVO       =  0.5 ;
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
-
-    /* local OpMode members. */
-    HardwareMap hwMap           =  null;
+    /* Local OpMode members. */
+    HardwareMap hwMap  = null;
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareZach(){
-
+    public HardwareK9bot() {
     }
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
+        // save reference to HW Map
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftFrontDrive  = hwMap.get(DcMotor.class, "leftF_drive");
-        rightFrontDrive = hwMap.get(DcMotor.class, "rightF_drive");
-        leftRearDrive  = hwMap.get(DcMotor.class, "left_drive");
-        rightRearDrive = hwMap.get(DcMotor.class, "right_drive");
-        leftArm    = hwMap.get(DcMotor.class, "left_arm");
-        leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        leftDrive  = hwMap.get(DcMotor.class, "left_drive");
+        rightDrive = hwMap.get(DcMotor.class, "right_drive");
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-        leftArm.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-        leftClaw  = hwMap.get(Servo.class, "left_hand");
-        rightClaw = hwMap.get(Servo.class, "right_hand");
-        leftClaw.setPosition(MID_SERVO);
-        rightClaw.setPosition(MID_SERVO);
+        arm  = hwMap.get(Servo.class, "arm");
+        claw = hwMap.get(Servo.class, "claw");
+        arm.setPosition(ARM_HOME);
+        claw.setPosition(CLAW_HOME);
     }
- }
-
+}

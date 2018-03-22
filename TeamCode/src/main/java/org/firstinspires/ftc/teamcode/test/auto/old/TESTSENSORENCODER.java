@@ -1,8 +1,4 @@
-package org.firstinspires.ftc.teamcode.test.auto.forLater;
-
-/**
- * Created by afield on 9/27/2017.
- */
+package org.firstinspires.ftc.teamcode.test.auto.old;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -22,43 +18,21 @@ import org.firstinspires.ftc.teamcode.pd.HardwareNut;
 import java.util.Locale;
 
 /**
- * This file illustrates the concept of driving a path based on encoder counts.
- * It uses the common Pushbot hardware class to define the drive on the robot.
- * The code is structured as a LinearOpMode
- *
- * The code REQUIRES that you DO have encoders on the wheels,
- *   otherwise you would use: PushbotAutoDriveByTime;
- *
- *  This code ALSO requires that the drive Motors have been configured such that a positive
- *  power command moves them forwards, and causes the encoders to count UP.
- *
- *   The desired path in this example is:
- *   - Drive forward for 48 inches
- *   - Spin right for 12 Inches
- *   - Drive Backwards for 24 inches
- *   - Stop and close the claw.
- *
- *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
- *  that performs the actual movement.
- *  This methods assumes that each movement is relative to the last stopping place.
- *  There are other ways to perform encoder based moves, but this method is probably the simplest.
- *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ * Created by afield on 11/16/2017.
  */
-
-@Autonomous(name="Blue: Auto Drive Side Park", group="Blue")
+@Autonomous(name="TEST DRIVING", group="Blue")
 @Disabled
-public class AutonomousEncoderParkBlueSide extends LinearOpMode {
+
+public class TESTSENSORENCODER extends LinearOpMode {
+    /* Declare OpMode members. */
     HardwareNut robot = new HardwareNut();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    public final static double ARM_HOME = 0.08;
     public final static double CLAW_HOME = 0.08;
 
     final double CLAW_SPEED = 0.02;
+    double armPosition = robot.CLAW_HOME;                   // Servo safe position
     double clawPosition = robot.CLAW_HOME;
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -93,7 +67,7 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
                 robot.getLeftDrive().getCurrentPosition(),
                 robot.getRightDrive().getCurrentPosition(),
                 robot.getRightArm().getCurrentPosition(),
-                robot.getLeftArm().getCurrentPosition());
+                robot.getRightDrive().getCurrentPosition());
 
 
         telemetry.update();
@@ -103,7 +77,7 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
         DistanceSensor sensorDistance;
 
 
-        robot.init(hardwareMap);    //TODO why twice??
+        robot.init(hardwareMap);
 
 
         // get a reference to the color sensor.
@@ -132,7 +106,7 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
 
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
-//        while (opModeIsActive()) {
+        while (opModeIsActive()) {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
             // then cast it back to int (SCALE_FACTOR is a double)
@@ -177,17 +151,24 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
             // Wait for the game to start (driver presses PLAY)
 
 
-            robot.getRightClaw().setPosition(robot.CLAW_MAX_RANGE);
-            sleep(1000);
-                if (sensorColor.red() >= 60) {
-                encoderDrive(DRIVE_SPEED, -2, -2, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
-                robot.getRightClaw().setPosition(ARM_HOME);
-                stop();
-            }
 
-            else if (sensorColor.blue() >= 60) {
-                encoderDrive(DRIVE_SPEED, 2, 2, 3.0);
-                robot.getRightClaw().setPosition(ARM_HOME);
+            if (sensorColor.red() >= 60) {
+                encoderDrive(DRIVE_SPEED, -5, -5, 3.0);  // S1: Forward 48 Inches with 5 Sec timeout
+               sleep(6000);
+                encoderDrive(TURN_SPEED, 0, 10, 5.0);
+                sleep(6000);
+              encoderDrive(DRIVE_SPEED, -10, -10, 5.0);
+                sleep(5000);
+                stop();
+            } else if (sensorColor.blue() >= 60) {
+                encoderDrive(DRIVE_SPEED, 1, 1, 3.0);
+                robot.getRightClaw().setPosition(CLAW_HOME);
+                encoderDrive(DRIVE_SPEED, -3, -3, 4.0);
+                encoderDrive(TURN_SPEED, 5, -5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                encoderDrive(DRIVE_SPEED, -6, -6, 4.0);
+                encoderDrive(TURN_SPEED, -8, 8, 4.0);
+                encoderDrive(DRIVE_SPEED, -9, -9, 4.0);
+                sleep(5000);
                 stop();
             }
             if (sensorColor.red() < 60) {
@@ -207,7 +188,7 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
-
+        }
     }
 
     /*
@@ -298,4 +279,5 @@ public class AutonomousEncoderParkBlueSide extends LinearOpMode {
 
         }
     }
+
 }
